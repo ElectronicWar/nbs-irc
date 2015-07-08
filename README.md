@@ -6,3 +6,6 @@ nbs-irc is copyright (c) the original authors and contributors.
 
 Changes are copyright (c) 2015 Manuel Kröber and
 licensed under the MIT license, see LICENSE.
+
+## Requirements
+My changes require the usage of mIRC 7.33 or newer and are always developed using the latest release (v7.41).
