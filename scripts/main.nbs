@@ -2933,7 +2933,7 @@ dialog om {
 }
 on *:dialog:om:init:0:{
   set -u1 %tmp.aboutblock 1
-  did -a om 10 nbs-irc $n.version for mIRC 7+
+  did -a om 10 nbs-irc $n.version for mIRC 7.33+
   did -a om 20 Created and maintained by Dibbe with some help from haxninja
   did -a om 30 Annorax, Maverick, Specter2, Leech, slanne and uK
   n.showversion 100
