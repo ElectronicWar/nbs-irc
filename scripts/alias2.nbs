@@ -68,7 +68,7 @@ join {
     if (!$2) && ($chankey(%c)) join %c $v1
     else { 
       if ($2) set %pw. [ $+ [ %c ] ] $2
-      join %c $2
+      !join %c $2
     }
   }
   else !join $1-
