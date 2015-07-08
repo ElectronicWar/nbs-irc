@@ -1,0 +1,45 @@
+;
+alias tclr {
+color background 0
+color editbox 0
+color listbox 0
+color listbox text 1
+color gray text 15
+color editbox text 1
+color normal text 1
+color action text 6
+color ctcp text 4
+color highlight text 3
+color info text 2
+color info2 text 3
+color invite text 3
+color join text 3
+color kick text 3
+color mode text 3
+color nick text 3
+color notice text 5
+color notify text 7
+color other text 6
+color own text 1
+color part text 3
+color quit text 2
+color topic text 3
+color wallops text 5
+color title text 6
+color whois text 1
+color inactive 0
+color treebar text 14
+}
+alias tname return mIRC
+alias nick.style return <<mode><nick>>
+alias me.style return <<mode><nick>>
+alias par.style return (<text>)
+alias bracket.style return [<text>]
+alias quote.style return '<text>'
+alias pre return *
+alias ttimestamp return [HH:nn:ss]
+alias tfont return -9 fixedsys
+alias me.clr return 2
+alias op.clr return 1
+alias voice.clr return 1
+alias normal.clr return 1

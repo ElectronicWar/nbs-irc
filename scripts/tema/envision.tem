@@ -1,0 +1,51 @@
+;by: Futte - Gustav@soetast.com
+alias tclr {
+  color 10 11433018
+  color 11 16744451
+  color 13 16748113
+  color 15 12500670
+  color action text 15
+  color ctcp text 15
+  color info text 15
+  color info2 text 15
+  color highlight text 14
+  color invite text 15
+  color join text 15
+  color kick text 5
+  color mode text 15
+  color nick text 15
+  color normal text 1
+  color notice text 15
+  color notify text 15
+  color other text 14
+  color own text 1
+  color part text 15
+  color quit text 15
+  color topic text 5
+  color wallops text 15
+  color whois text 15
+  color listbox 0
+  color listbox text $voice.clr
+  color title text 5
+  color editbox text 1
+  color inactive 0
+  color background 0
+  color editbox 0
+  color treebar text 14
+}
+alias nick.style   return 10-<mode>14<nick>10-
+
+alias me.style   return 10-<mode>14<nick>10-
+
+alias bracket.style   return 10-<text>10-
+
+alias par.style   return 10-<text>10-
+
+alias pre  return » 
+alias tname  return envision 
+alias ttimestamp  return HH2:nn2:ss 
+alias me.clr  return 1 
+alias op.clr  return 10 
+alias voice.clr  return 14 
+alias normal.clr  return 15 
+alias normal.clr  return 14 

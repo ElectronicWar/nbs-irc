@@ -1,0 +1,46 @@
+;
+alias tclr {
+color 4 4609535
+color 10 11776768
+color 14 6447714
+color 15 12303291
+color action text 0
+color ctcp text 14
+color info text 14
+color info2 text 14
+color highlight text 15
+color invite text 15
+color join text 10
+color kick text 14
+color mode text 14
+color nick text 14
+color normal text 15
+color notice text 14
+color notify text 14
+color other text 14
+color own text 15
+color part text 10
+color quit text 10
+color topic text 15
+color wallops text 14
+color whois text 14
+color listbox 1
+color listbox text 15
+color title text 15
+color editbox text 15
+color inactive 1
+color background 1
+color editbox 1
+color treebar text 15
+}
+alias tname return irssi
+alias nick.style return 14<<mode><nick>14>
+alias me.style return 14<15<mode>0<nick>14>
+alias par.style return 14[<text>14]
+alias bracket.style return 14[<text>14]
+alias pre return 12-0!12-
+alias ttimestamp return 15HH:nn:ss
+alias me.clr return 10
+alias op.clr return 0
+alias voice.clr return 15
+alias normal.clr return 14

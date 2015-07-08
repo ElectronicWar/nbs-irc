@@ -1,0 +1,25 @@
+ad,Advertises the script to the active channel
+aj,Force autojoin on current network
+amsg2,Lets you exclude specific channels from '/amsg' (type /amsg2 for help)
+auth,Use to auth on QuakeNet/UnderNet
+awaysys,Opens the away dialog [Default: F3]
+back,Return from away [Default: F4]
+c <input>,Calculates <input> and puts the result in the editbox (Example: /c 1+1)
+cc <#chan>,Opens the channel central for <#chan>
+clag,Checks your lag to the server
+clonescan [#chan],Scans for clones in active channel or [#chan]
+defbrowserfix,You can use this if URLs open in IE even if you have another default browser
+host2nick <host>,Scans for nicks matching <host>
+ip2nick <ip>,Scans for nicks matching <ip>
+logexport,Strip color codes from chosen log file
+logg,Open the log file for the active window
+month <number>,Shows the name of month <number> and number of days, eg: April (30 days)
+np,Say song playing in Winamp/iTunes [Default: F8]
+paste,Opens the paste dialog
+power,Say in how many channels you are oped on
+psybnc,Opens the psyBNC window for the active connection
+sbnc,Opens the sBNC window for the active connection
+sendcb <nick>,Sends your clipboard contents to <nick>
+sendsong <nick>,Sends the current song playing in Winamp to <nick>
+slog <query>,Search the log of the active window for <query>
+vote,Starts a yes/no vote

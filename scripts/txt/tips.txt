@@ -1,0 +1,22 @@
+If you have any questions, suggestions or anything else, visit #nbs-irc on Quakenet (irc.quakenet.org) and tell us about it.
+There are lots of themes to choose from, use /theme to view and change themes.
+Be sure to read the FAQ (F2 -> FAQ) before asking for help elsewhere.
+You can doubleclick IP addresses of game servers to use the game laucher to join the server.
+The script has an alarm clock, type /alarm to use it.
+Want to exclude channels from /amsg? Type /amsg2 for more information.
+You can add shortcuts to applications and URLs in the extended toolbar.
+You can click on the popups from hightlights/querys to activate that window or right click to close them.
+/o requests op from Q/L on QuakeNet.
+World of Warcraft quick search: /thott (thottbot.com), /allak (wow.allakhazam.com), /wh (wowhead.com)
+You can double click in the whois window to close/minimize it.
+You can use /slog <query> to search the log of the active window for <query>
+You can use /exportlog to remove control codes (Ctrl+K,B,U,R) and create a clean textfile from any logfile.
+Use the built in theme editor to edit themes to your liking (theme setup -> edit theme or /tedit)
+You can use /wsend <nick> to send someone the current song playing in Winamp.
+You can use /imdb <query> to search on imdb.
+You can use /g <query> to search on google.
+You can use /wiki <query> to search on wikipedia.
+You can add your own random quit messages, kick messages and slaps in /misc
+Use 'Connect at startup' (/autocon) if you want to connect to multiple servers at startup.
+Winamp hotkeys: Shift+F# (1: prev, 2: play, 3: pause, 4: stop, 5: next)
+You can see the last message from popups using the command /lastpop or by pressing F5.

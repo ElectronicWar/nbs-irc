@@ -1,0 +1,50 @@
+;by: Dibbe
+alias tclr {
+  color 11 13083768 
+  color 14 5392189
+  color 15 9269588
+  color action text 15
+  color ctcp text 14
+  color highlight text 11
+  color info text 14
+  color info2 text 14
+  color invite text 14
+  color join text 14
+  color kick text 14
+  color mode text 14
+  color nick text 14
+  color normal text 11
+  color notice text 14
+  color notify text 14
+  color other text 14
+  color own text 11
+  color part text 14
+  color quit text 14
+  color topic text 15
+  color wallops text 14
+  color whois text 15
+  color listbox text $voice.clr
+  color listbox 1
+  color gray text 14
+  color title text 14
+  color editbox text 11
+  color inactive 1
+  color background 1
+  color editbox 1
+  color treebar text 11
+}
+alias nick.style   return 14(<mode>15<nick>14):
+
+alias me.style   return 14(<mode>11<nick>14):
+
+alias bracket.style   return 15[<text>15]
+
+alias par.style    return 15‹<text>15›
+
+alias pre  return • 
+alias tname  return dks 
+alias ttimestamp  return 14(15HH:nn:ss14) 
+alias me.clr  return 0 
+alias op.clr  return 11 
+alias voice.clr  return 15 
+alias normal.clr  return 14 

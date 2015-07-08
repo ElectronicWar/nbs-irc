@@ -1,0 +1,45 @@
+;by: haxninja
+alias tclr {
+  theme.reset
+  .timestamp -f $ttimestamp
+  color action text 3
+  color ctcp text 3
+  color info text 3
+  color info2 text 3
+  color highlight text 3
+  color invite text 3
+  color join text 3
+  color kick text 3
+  color mode text 3
+  color nick text 3
+  color normal text 9
+  color notice text 9
+  color notify text 9
+  color other text 9
+  color own text 9
+  color part text 9
+  color quit text 9
+  color topic text 9
+  color wallops text 9
+  color whois text 9
+  color listbox 1
+  color listbox text 9
+  color gray text 1
+  color title text 9
+  color editbox text 9
+  color inactive 1
+  color background 1
+  color editbox 1
+  color treebar text 9
+}
+alias nick.style return [<mode><nick>]
+alias me.style return [<mode>0<nick>]
+alias bracket.style return 9[ <text> 9]
+alias par.style return [<text>]
+alias pre return ´
+alias tname return Haxxor
+alias ttimestamp return HH:nn:ss
+alias me.clr return 0
+alias op.clr return 9
+alias voice.clr return 9
+alias normal.clr return 9

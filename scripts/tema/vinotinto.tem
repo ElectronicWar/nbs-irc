@@ -1,0 +1,45 @@
+;by: razcal
+alias tclr {
+  color 1 20
+  color 5 170
+  color action text 0
+  color ctcp text 5
+  color highlight text 4
+  color info text 5
+  color info2 text 5
+  color invite text 4
+  color join text 5
+  color kick text 5
+  color mode text 5
+  color nick text 5
+  color normal text 0
+  color notice text 5
+  color notify text 5
+  color other text 5
+  color own text 0
+  color part text 5
+  color quit text 5
+  color topic text 4
+  color wallops text 5
+  color whois text 5
+  color listbox text $voice.clr
+  color listbox 1
+  color gray text 5
+  color title text 4
+  color editbox text 0
+  color inactive 1
+  color background 1
+  color editbox 1
+  color treebar text 15
+}
+alias nick.style return 5‹<mode><nick>5›
+alias me.style return 4‹<mode>0<nick>4›
+alias bracket.style return 5[<text>5]
+alias par.style return 4‹<text>4›
+alias pre return »
+alias tname return vino tinto
+alias ttimestamp return HH4:nn4:ss
+alias me.clr return 0
+alias op.clr return 4
+alias voice.clr return 5
+alias normal.clr return 14

@@ -1,0 +1,53 @@
+;by: haxninja
+alias tclr {
+  color 0 15658734
+  color 4 4210922
+  color 7 26367
+  color 9 52224
+  color 10 9530697
+  color 11 4730651
+  color action text 7
+  color ctcp text 10
+  color info text 10
+  color info2 text 10
+  color highlight text 0
+  color invite text 10
+  color join text 10
+  color kick text 10
+  color mode text 10
+  color nick text 10
+  color normal text 0
+  color notice text 10
+  color notify text 10
+  color other text 0
+  color own text 0
+  color part text 10
+  color quit text 10
+  color topic text 0
+  color wallops text 10
+  color whois text 0
+  color listbox 11
+  color listbox text 15
+  color gray text 10
+  color title text 10
+  color editbox text 0
+  color inactive 11
+  color background 11
+  color editbox 11
+  color treebar text 15
+}
+alias nick.style   return 7<mode>0<nick>7:
+
+alias me.style   return 7<mode><nick>:
+
+alias bracket.style   return 7[ <text> 7]
+
+alias par.style   return 10(<text>10)
+
+alias pre  return » 
+alias tname  return Fragbite 
+alias ttimestamp  return 11(HH11:nn11:ss11) 
+alias me.clr  return 7 
+alias op.clr  return 0 
+alias voice.clr  return 15 
+alias normal.clr  return 14 

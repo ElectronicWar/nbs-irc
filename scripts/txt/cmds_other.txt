@@ -1,0 +1,8 @@
+faq,Loads the FAQ in your browser
+
+g <query>,Searches for <query> on Google
+imdb <query>,Searches for <query> on IMDb
+wiki <query>,Searches for <query> on Wikipedia (english)
+thott <query>,Searches for <query> on thottbot
+allak <query>,Searches for <query> on wow.allakhazam.com
+wh <query>,Searches for <query> on wowhead

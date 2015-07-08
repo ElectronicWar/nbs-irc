@@ -1,0 +1,46 @@
+;by: haxninja
+alias tclr {
+  color 10 1995182
+  color 11 5409733
+  color action text 11
+  color ctcp text 10
+  color info text 11
+  color info2 text 11
+  color highlight text 0
+  color invite text 11
+  color join text 11
+  color kick text 11
+  color mode text 11
+  color nick text 11
+  color normal text 0
+  color notice text 11
+  color notify text 11
+  color other text 0
+  color own text 0
+  color part text 11
+  color quit text 11
+  color topic text 0
+  color wallops text 11
+  color whois text 0
+  color listbox 1
+  color listbox text 11
+  color gray text 10
+  color title text 11
+  color editbox text 0
+  color inactive 1
+  color background 1
+  color editbox 1
+  color treebar text 15
+}
+alias nick.style return 710<mode>0<nick>7 ‹
+alias me.style return 710<mode><nick>7 ›
+alias bracket.style return 7[ <text> 7]
+alias par.style return 7(<text>7)
+alias pre return »
+alias tname return Apelsinjuice i rymden
+alias ttimestamp return 7(HH7:nn7:ss7)
+alias me.clr return 0
+alias op.clr return 7
+alias me.clr return 0
+alias voice.clr return 11
+alias normal.clr return 10

@@ -1,0 +1,44 @@
+;by: valio
+alias tclr {
+  color 11 16561043
+  color action text 0
+  color ctcp text 14
+  color highlight text 14
+  color info text 14
+  color info2 text 14
+  color invite text 14
+  color join text 14
+  color kick text 14
+  color mode text 14
+  color nick text 14
+  color normal text 1
+  color notice text 2
+  color notify text 2
+  color other text
+  color own text 1
+  color part text 14
+  color quit text 14
+  color topic text 1
+  color wallops text 14
+  color whois text 14
+  color listbox text 1
+  color listbox 11
+  color gray text 14
+  color title text 14
+  color editbox text 1
+  color inactive 11
+  color background 11
+  color editbox 11
+  color treebar text 14
+}
+alias nick.style return 2[<mode><nick>2]
+alias me.style return 2[<mode>12<nick>2]
+alias bracket.style return 2[<text>2]
+alias par.style return (<text>)
+alias pre return :::
+alias tname return babyblue
+alias ttimestamp return 2[HH:nn:ss2]
+alias me.clr return 0
+alias op.clr return 2
+alias voice.clr return 1
+alias normal.clr return 1

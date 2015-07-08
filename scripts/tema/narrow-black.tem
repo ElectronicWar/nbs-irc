@@ -1,0 +1,45 @@
+;by: haxninja
+alias tclr {
+  theme.reset
+  .timestamp -f $ttimestamp
+  color 4 987120
+  color action text 0
+  color ctcp text 4
+  color info text 4
+  color info2 text 4
+  color highlight text 0
+  color invite text 4
+  color join text 4
+  color kick text 4
+  color mode text 4
+  color nick text 4
+  color normal text 0
+  color notice text 0
+  color notify text 4
+  color other text 0
+  color own text 0
+  color part text 4
+  color quit text 4
+  color topic text 0
+  color wallops text 14
+  color whois text 0
+  color listbox 1
+  color listbox text $voice.clr
+  color title text 4
+  color editbox text 0
+  color inactive 1
+  color background 1
+  color editbox 1
+  theme.finished
+}
+alias nick.style return 4<mode>0<nick>4:
+alias me.style return <mode>0<nick>4:
+alias bracket.style return 4[ <text> 4]
+alias par.style return 4(<text>4)
+alias pre return »
+alias tname return Narrow Red
+alias ttimestamp return HH4:nn4:ss
+alias me.clr return 0
+alias op.clr return 4
+alias voice.clr return 5
+alias normal.clr return 14

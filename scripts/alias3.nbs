@@ -1,0 +1,139 @@
+bpre return $remove($strip($pre),$chr(160),$chr(32))
+quitmsg {
+  if (!$read(config\quits.txt)) { return - $strip($n.name) $n.version - www.nbs-irc.net - }
+  else return $read(config\quits.txt)
+}
+bncwin {
+  return @ $+ $1 ( $+ $2 $+ )
+}
+hidchans {
+  var %tmp = 0, %i = 1
+  while (%i <= $chan(0)) {
+    if ($window($chan(%i)).state != hidden) inc %tmp
+    inc %i
+  }
+  return %tmp
+}
+n.cbgn {
+  var %i = 1, %e = $did($1,$2).lines
+  while (%i <= %e) {
+    if ($did($1,$2,%i) == $3) return %i
+    inc %i
+  }
+}
+n.file {
+  return $replace($1-,?,_,/_,\_,*,_,:,_,<,_,>,_,",_,|,_)
+}
+authedited {
+  if ($ncfg(authnick) != nick) && ($ncfg(authpass) != pass) return $true
+}
+qwa {
+  if ($isid) return $dll(scripts\dll\wa_link.dll,WA_Link_Raw_Stats,$1-)
+}
+swamp {
+  if ($isid) return $dll(scripts\dll\swamp.dll,WinAmpGet,$1-)
+}
+winamp.tid {
+  var %s = $1, %a = $asctime($qwa(%s),nn:ss)
+  if ($asctime($qwa(%s),HH) > 1) var %a = $calc($gettok(%a,1,58) + ($ifmatch -1) *60) $+ : $+ $gettok(%a,2,58)
+  return %a
+}
+n.osinfo {
+  return $remove($getsys(Win32_OperatingSystem).Caption,Microsoft,(r),(tm),®,,â,Â,,¢) $+ $iif($replace($getsys(Win32_OperatingSystem).CSDVersion,service pack $+ $chr(32),SP),$c44 $ifmatch)
+}
+n.cpuinfo {
+  var %x = $getsys(Win32_Processor).Name
+  if (unknown isin %x) var %x = $dedll(cpuinfo)
+  return $removecs($remove(%x,cpu,(r),(tm),®,,â,Â,@,,¢),Dual Core Processor) (at $getsys(Win32_Processor).CurrentClockSpeed MHz)
+}
+dedll return $dll(scripts\dll\darkenginex.dll,$1,_)
+getsys {
+  if ($1) {
+    .comopen sys WbemScripting.SWbemLocator
+    if (!$comerr) {
+      var %x = $com(sys,ConnectServer,3,dispatch* sys2), %x = $com(sys2,ExecQuery,3,bstr*,select $prop from $1,dispatch* sys3), %x = $comval(sys3,$iif($2,$2,1),$prop)
+      if ($com(sys)) .comclose sys
+      if ($com(sys2)) .comclose sys2
+      if ($com(sys3)) .comclose sys3
+      return %x
+    }
+  }
+}
+clr return $+(,$color($1),$2,)
+awaynet {
+  var %i = 1, %awaytot 0
+  while (%i <= $scon(0)) {
+    if ($scon(%i).away) { inc %awaytot }
+    inc %i
+  }
+  return %awaytot
+}
+perc return $round($calc(($1 / $2)*100),1) $+  %
+dur { 
+  if ($1) return $remove($duration($1,$iif(!$2,1,$2)),ks,k,ays,ay,rs,r,ins,in,ecs,ec) 
+}
+dur2 {  
+  if ($1) {
+    var %x = $duration($1,3)
+    if ($gettok(%x,1,58) > 0) return %x
+    else return $gettok(%x,2-,58)
+  }
+}
+csinfo.id { return name: $readini(scripts\qstat\cs_info.ini, cs, namn) $chr(160) $chr(160) players: $readini(scripts\qstat\cs_info.ini, cs, spelare) $chr(160) $chr(160) map: $readini(scripts\qstat\cs_info.ini, cs, map) $chr(160) $chr(160) ping: $readini(scripts\qstat\cs_info.ini, cs, ping) $chr(160) $chr(160) ip: $readini(scripts\qstat\cs_info.ini, cs, ip) }
+csip return $readini(scripts\qstat\cs_info.ini, cs, ip)
+bfe {
+  var %l = $len($1)
+  while (%l) {
+    var %c = $calc($asc($mid($1,%l,1)) - %l)
+    if ($len(%c) < 2) var %c = 00 $+ %c
+    elseif ($len(%c) < 3) var %c = 0 $+ %c
+    var %r = %r $+ %c
+    dec %l 1
+  }
+  return %r
+}
+n.input {
+  set %n.input1 $1
+  set %n.input2 $2
+  set %n.input3 $3
+  return $dialog(input,input,-4)
+}
+chankey {
+  if ($chan($1).key) return $ifmatch
+  elseif (%pw. [ $+ [ $1 ] ]) return $ifmatch
+}
+n.chanstats {
+  if ($1) return Total $nick($1,0) nicks $par($+($iif($nick($1,0,o) > 0,$ifmatch ops),$iif($nick($1,0,h) > 0,$chr(44) $ifmatch halfops),$iif($nick($1,0,v) > 0,$chr(44) $ifmatch voices),$iif($nick($1,0,r) > 0,$chr(44) $ifmatch $iif($len($prefix) > 3,other,regular))))
+}
+n.par if ($1) return ( $+ $1- $+ )
+insttime return $right($calc($ncfg(installtime) - $ctime),-1)
+cm if ($1 isnum 5-14) return $replacecs($1,5,t,6,n,7,i,8,m,9,c,10,s,11,r,12,N,13,C,14,p)
+cmode {
+  if (!$2) return
+  if ($3 == o) return $left($removecs($nick($2,$1).pnick,$1),1)
+  elseif ($hget(nbs,modeprefix) == 1) {
+    if ($3) return $left($removecs($nick($2,$1).pnick,$1),1)
+    else return $left($removecs($nick($2,$1).pnick,$1),1) $+ $1
+  }
+  elseif (!$3) return $1
+}
+avgpd { 
+  if ($1) {
+    if ($insttime < 86401) return $1
+    else return $round($calc($1 / ($insttime /86400)),1)
+  }
+}
+nohide {
+  if (!$1) return
+  if ($istok($ncfg(nohide),$1,32)) return 1
+}
+c44 return $chr(44)
+cit return $+(",$1-,")
+n.qnet if ($right($server,13) == .quakenet.org) && ($network == quakenet) return $true
+n.unet if ($right($server,13) == .undernet.org) && ($network == undernet) return $true
+n.maxbans if (%maxbans. [ $+ [ $cid ] ]) return $ifmatch | else return ?
+n.topiclen if (%topiclen. [ $+ [ $cid ] ]) return $ifmatch | else return ?
+n.useragent return $+($strip($n.name),/,$n.version) (r: $n.version.date $+ , m: $version $+ , w: $os $+ , t: $tname $+ )
+n.name return nbs-irc
+n.version return 2.39
+n.version.date if ($read(scripts\other\version,1)) return $ifmatch

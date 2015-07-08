@@ -1,0 +1,47 @@
+;by peanut
+alias tclr {
+  color 2 $rgb(77,107,123)
+  color 3 $rgb(222,243,255)
+  color 6 $rgb(137,166,183)
+  color 11 $rgb(96,128,147)
+  color 13 $rgb(160,194,214)
+  color action text 3
+  color ctcp text 11
+  color info text 11
+  color info2 text 11
+  color highlight text 6
+  color invite text 11
+  color join text 11
+  color kick text 4
+  color mode text 6
+  color nick text 6
+  color normal text 3
+  color notice text 6
+  color notify text 11
+  color other text 11
+  color own text 0
+  color part text 11
+  color quit text 11
+  color topic text 3
+  color wallops text 6
+  color whois text 3
+  color listbox 2
+  color listbox text 6
+  color gray text 15
+  color title text 15
+  color editbox text 3
+  color inactive 2
+  color background 2
+  color editbox 2
+  color treebar text 3
+}
+alias nick.style return 3(<mode><nick>3)
+alias me.style return 0(<mode>0<nick>0)
+alias bracket.style return 6[<text>6]
+alias par.style return 6(<text>6)
+alias pre return »
+alias tname return lite
+alias ttimestamp return HH:nn:ss
+alias me.clr return 3
+alias op.clr return 3
+alias normal.clr return 11

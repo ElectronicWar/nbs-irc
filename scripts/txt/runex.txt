@@ -1,0 +1,14 @@
+cmd
+calc
+charmap
+regedit
+notepad
+ping
+dxdiag
+mstsc
+mspaint
+sndvol32
+spider
+taskmgr
+telnet
+winmine

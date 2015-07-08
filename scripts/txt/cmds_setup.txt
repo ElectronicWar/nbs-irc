@@ -1,0 +1,18 @@
+setup,Opens the Control panel [Default: F2]
+alarm,Opens the alarm timer
+blist,Opens the blacklist [Default: F11]
+caj,Opens Autojoin setup
+cns,Opens NickServ setup
+fc,Opens the font chooser
+fkeys,Opens F-key bindings setup
+gl,Opens the game launcher
+lv,Opens the logviewer [Default: F9]
+misc,Opens Misc settings
+nq,Opens Sound/highlight settings
+popups,Opens Notifications setup
+prot,Opens Protections setup
+quakenet,Opens QuakeNet setup
+sa,Opens Song announce setup
+servers,Opens servers setup
+theme [-r] [theme],Opens theme setup or loads [theme], -r will reload current theme
+undernet,Opens UnderNet setup

@@ -1,0 +1,15 @@
+j <#chan>,Shortcut to /join
+p [#chan],Parts [#chan]/active channel
+op <nick>,Gives <nick> op on active channel
+dop <nick>,Takes <nick>'s op on active channel
+dvoice <nick>,Takes <nick>'s voice on active channel
+voice <nick>,Gives <nick> voice on active channel
+k [#chan] <nick>,Kicks <nick> from [#chan]/active channel (shortcut to /kick)
+q <nick>,Shortcut to /query
+t [new topic],Show or set topic in active channel [Default: F7]
+w <nick>,Whois <nick> (extended)
+ws <nick>,Whois <nick> (normal)
+o,requests op from Q/L on QuakeNet
+qw <nick>,Q whois <nick> (QuakeNet only)
+ping <nick>,ctcp pings <nick>
+slap <nick>,Random slaps <nick> (edit in /misc > slaps)

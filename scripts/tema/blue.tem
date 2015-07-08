@@ -1,0 +1,47 @@
+;
+alias tclr {
+  color 11 16767925 ;ljus
+  color 2 15169792 ;mörk
+  color 12 16297562 ;normal
+  color action text 0
+  color ctcp text 2
+  color info text 2
+  color info2 text 2
+  color highlight text 12
+  color invite text 12
+  color join text 2
+  color kick text 2
+  color mode text 2
+  color nick text 2
+  color normal text 12
+  color notice text 11
+  color notify text 12
+  color other text 2
+  color own text 12
+  color part text 2
+  color quit text 2
+  color topic text 11
+  color wallops text 2
+  color whois text 2
+  color listbox 1
+  color listbox text 12
+  color gray text 14
+  color title text 11
+  color editbox text 12
+  color inactive 1
+  color background 1
+  color editbox 1
+  color treebar text 11
+}
+alias nick.style return 2[ <mode><nick> 2]
+alias me.style return 2[ <mode>11<nick> 2]
+alias bracket.style return 2[ <text> 2]
+alias par.style return 12[ <text> 12]
+alias pre  return · · 
+alias tname  return blue 
+alias t.fil  return blue.tem 
+alias ttimestamp  return 2[ HH:nn:ss 2] 
+alias me.clr  return 0 
+alias op.clr  return 11 
+alias voice.clr  return 12 
+alias normal.clr  return 2 

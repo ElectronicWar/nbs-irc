@@ -1,0 +1,13 @@
+bw [-e],Say or echo current bandwith usage
+bw.setup,Select card used for /bw
+cpu [-e],Say or echo CPU information
+gfx [-e],Say or echo graphics card information
+hd [-e],Say or echo hard disks free space/total space
+hds [-el],Say or echo each partitions free space/total space (use /hds -l to display partition labels)
+mbm [-e],Say or echo MBM information
+mem [-e],Say or echo Memory usage
+modem [-e],Say or echo dialup information
+net [-e],Say or echo NIC information
+os [-e],Say or echo Operating System information
+sys [-e],Say or echo system information (OS, CPU, memory usage, graphics, uptime)
+uptime [-e],Say or echo uptime

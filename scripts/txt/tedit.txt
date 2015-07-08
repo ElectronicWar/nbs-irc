@@ -1,0 +1,12 @@
+nick.style,The style of other users nicks in messages
+me.style,The style of your nick in messages
+bracket.style,The style of secondary brackets wich are used in various misc places such as whois/ctcp/notices etc
+par.style,The style of various places where ( and ) fit. eg: -› Quit: nick (a@host.org)
+pre,Script prefix that is used in various events, eg: -› join: nick (a@host.org)
+ttimestamp,This sets the timestamps to anything you like. HH (hours) nn (minutes) ss (seconds), type /help $asctime to see all options.
+tfont,Format: size fontname (size is in px, use negative value for pt, eg: -8) Leave blank to use default font
+quote.style,The style of quotes, eg: -› Nickname 'nick' is already in use
+me.clr,Your color in the nicklist (enter z to use color no 0)
+op.clr,Oped users color in the nicklist (enter z to use color no 0)
+voice.clr,Voiced users color in the nicklist (enter z to use color no 0)
+normal.clr,Regular users color in the nicklist (enter z to use color no 0)

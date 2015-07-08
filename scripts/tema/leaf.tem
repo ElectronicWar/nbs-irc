@@ -1,0 +1,46 @@
+;by: haxninja
+alias tclr {
+  color 0 15658734
+  color 9 1623329
+  color 10 1061912
+  color 11 25613
+  color action text 15
+  color ctcp text 3
+  color info text 3
+  color info2 text 3
+  color highlight text 0
+  color invite text 3
+  color join text 3
+  color kick text 3
+  color mode text 3
+  color nick text 3
+  color normal text 0
+  color notice text 3
+  color notify text 3
+  color other text 0
+  color own text 0
+  color part text 3
+  color quit text 3
+  color topic text 0
+  color wallops text 3
+  color whois text 0
+  color listbox 10
+  color listbox text $voice.clr
+  color title text 3
+  color editbox text 0
+  color inactive 10
+  color background 10
+  color editbox 10
+  color treebar text 9
+}
+alias nick.style return 3(<mode>0<nick>3)
+alias me.style return 3(<mode><nick>3)
+alias bracket.style return 9 $+ $chr(123) 3 $+ <text> 9 $+ $chr(125)
+alias par.style return 11(<text>11)
+alias pre return 3‘
+alias tname return Leaf
+alias ttimestamp return 3(11HH3:11nn3:11ss3)
+alias me.clr return 9
+alias op.clr return 0
+alias voice.clr return 14
+alias normal.clr return 11

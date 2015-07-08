@@ -1,0 +1,49 @@
+;by: peanut
+alias tclr {
+  color 0 15395562
+  color 2 6568990
+  color 11 14661013
+  color 12 13602399
+  color 15 12829635  
+  color action text 11
+  color ctcp text 15
+  color highlight text 11
+  color info text 15
+  color info2 text 15
+  color invite text 14
+  color join text 14
+  color kick text 14
+  color mode text 14
+  color nick text 14
+  color normal text 0
+  color notice text 12
+  color notify text 14
+  color other text 14
+  color own text 12
+  color part text 14
+  color quit text 14
+  color topic text 11
+  color wallops text 14
+  color whois text 15
+  color listbox text 0
+  color listbox 2
+  color gray text 15
+  color title text 15
+  color editbox text 0
+  color inactive 2
+  color background 2
+  color editbox 2
+  color treebar text 11
+}
+alias nick.style return 11[<mode><nick>11]
+alias me.style return 11[<mode><nick>]
+alias bracket.style return 11[<text>11]
+alias par.style return (<text>)
+alias pre return 14.::
+alias tname return onefin
+alias t.fil return onefin.tem
+alias ttimestamp return 11[HH:nn:ss11]
+alias me.clr return 12
+alias op.clr return 11
+alias voice.clr return 15
+alias normal.clr return 15

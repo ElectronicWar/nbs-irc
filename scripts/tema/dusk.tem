@@ -1,0 +1,60 @@
+;By: slanne
+alias tclr {
+  color 0 $rgb(225,255,255)
+  color 1 $rgb(25,25,25)
+  color 2 $rgb(0,75,176)
+  color 3 $rgb(36,134,63)
+  color 4 $rgb(228,62,52)
+  color 5 $rgb(172,22,22)
+  color 6 $rgb(129,93,129)
+  color 7 $rgb(255,157,0)
+  color 8 $rgb(255,193,10)
+  color 9 $rgb(129,193,129)
+  color 11 $rgb(0,207,255)
+  color 12 $rgb(0,108,255)
+  color 14 $rgb(133,133,133)
+  color 15 $rgb(200,200,200)
+  color action text 15
+  color ctcp text 14
+  color info text 14
+  color info2 text 14
+  color highlight text 15
+  color invite text 14
+  color join text 14
+  color kick text 14
+  color mode text 14
+  color nick text 14
+  color normal text 0
+  color notice text 15
+  color notify text 15
+  color other text 0
+  color own text 15
+  color part text 14
+  color quit text 14
+  color topic text 14
+  color wallops text 14
+  color whois text 14
+  color listbox 1
+  color listbox text 8
+  color gray text 14
+  color title text 14
+  color editbox text 15
+  color inactive 1
+  color background 1
+  color editbox 1
+  color treebar text 15
+}
+alias nick.style   return    14<mode>0<nick> 8›
+
+alias me.style   return    14<mode>15<nick> 8›
+
+alias bracket.style   return 7‹14<text>7›
+
+alias par.style   return 7‹14<text>7›
+
+alias pre  return » 
+alias tname  return dusk 
+alias ttimestamp  return HH7:nn7:ss 
+alias me.clr  return 0 
+alias op.clr  return 7 
+alias normal.clr  return 15 
