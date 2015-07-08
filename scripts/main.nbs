@@ -4218,12 +4218,16 @@ on ^*:CHAT:*:{
 on ^*:TEXT:*:#:{
   if ($halted) return
   haltdef
+
+  ; Add support for proper playback buffer timestamps which use server-time or znc.in/server-time[-iso] 
+  var %timestamp = $iif($msgstamp, $msgstamp, $ctime)
+  
   if ($hget(nbs,win_ashow) == 1) window -w $chan
   hadd -m temp ci. [ $+ [ $cid ] $+ ] . [ $+ [ $chan ] ] $ticks
-  hadd -m temp text $color(normal) -mtlbfi4 # $replace($nick.style,<mode>,$cmode($nick,$chan,o),<nick>,$nick) $+  $1-
+  hadd -m temp text $color(normal) -mlbfi4 # $asctime(%timestamp, $n.timestamp) $replace($nick.style,<mode>,$cmode($nick,$chan,o),<nick>,$nick) $+  $1-
   ;if ($me isin $1-) {
   if ($wildtok($1-,$me $+ *,0,32) != 0) { 
-    if ($hget(nbs,nickbar) == 1) echo $color(normal) -mtlbfi4 # $replace($nick.style,<mode>,$cmode($nick,$chan,o),<nick>, $+ $hget(nbs,highlight_nick_color) $+ $nick $+ ) $+  $1-
+    if ($hget(nbs,nickbar) == 1) echo $color(normal) -mlbfi4 # $asctime(%timestamp, $n.timestamp) $replace($nick.style,<mode>,$cmode($nick,$chan,o),<nick>, $+ $hget(nbs,highlight_nick_color) $+ $nick $+ ) $+  $1-
     else echo $hget(temp,text)
     n.highlight $1-
     if ($away && !%n.away. [ $+ [ $nick ] ]) && ($ncfg(awaynotice) != 1) {
@@ -4260,6 +4264,10 @@ on ^*:action:*:#:{
 on ^*:TEXT:*:?:{
   if ($halted) return
   haltdef
+
+  ; Add support for proper playback buffer timestamps which use server-time or znc.in/server-time[-iso] 
+  var %timestamp = $iif($msgstamp, $msgstamp, $ctime)
+
   if ($nick == -psyBNC) {  
     if ($window(-psyBNC).state != hidden) window -h -psyBNC    
     n.bnc psyBNC
@@ -4296,7 +4304,7 @@ on ^*:TEXT:*:?:{
     }
   }
   else {
-    echo $color(normal) -mtlbfi4 $nick $replace($nick.style,<mode>,,<nick>,$nick) $+  $1- 
+    echo $color(normal) -mlbfi4 $asctime(%timestamp, $n.timestamp) $nick $replace($nick.style,<mode>,,<nick>,$nick) $+  $1- 
     if ($hget(nbs,mp3serv) == 1) && ($hget(nbs,mp3getcmd) isin $1-) n.servemp3 $nick
     if ($hget(nbs,privpip) == 1) && ($hget(nbs,query_sound_onopen) != 1) && (!%tmp.query.sound.block) var %x = 1
     if (!$appactive) fasttitle $nick $+ : $eval($1-,1) 
