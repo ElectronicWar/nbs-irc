@@ -135,5 +135,5 @@ n.maxbans if (%maxbans. [ $+ [ $cid ] ]) return $ifmatch | else return ?
 n.topiclen if (%topiclen. [ $+ [ $cid ] ]) return $ifmatch | else return ?
 n.useragent return $+($strip($n.name),/,$n.version) (r: $n.version.date $+ , m: $version $+ , w: $os $+ , t: $tname $+ )
 n.name return nbs-irc
-n.version return 2.40
+n.version return 2.41
 n.version.date if ($read(scripts\other\version,1)) return $ifmatch
