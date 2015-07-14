@@ -4304,7 +4304,7 @@ on ^*:TEXT:*:?:{
     }
   }
   else {
-    echo $color(normal) -mlbfi4 $asctime(%timestamp, $n.timestamp) $nick $replace($nick.style,<mode>,,<nick>,$nick) $+  $1- 
+    echo $color(normal) -mlbfi4 $nick $asctime(%timestamp, $n.timestamp) $replace($nick.style,<mode>,,<nick>,$nick) $+  $1- 
     if ($hget(nbs,mp3serv) == 1) && ($hget(nbs,mp3getcmd) isin $1-) n.servemp3 $nick
     if ($hget(nbs,privpip) == 1) && ($hget(nbs,query_sound_onopen) != 1) && (!%tmp.query.sound.block) var %x = 1
     if (!$appactive) fasttitle $nick $+ : $eval($1-,1) 
