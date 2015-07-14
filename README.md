@@ -7,5 +7,14 @@ nbs-irc is copyright (c) the original authors and contributors.
 Changes are copyright (c) 2015 Manuel Kröber and
 licensed under the MIT license, see LICENSE.
 
+## Improvements
+* Full support for ZNC 1.5+ playback buffer timestamps (IRCv3 server-time extension)
+* Support for latest mIRC, starting at 7.33
+
 ## Requirements
-My changes require the usage of mIRC 7.33 or newer and are always developed using the latest release (v7.41).
+mIRC 7.33 or newer is required.
+
+## Contributions
+Please report problems, bugs, improvements or features by opening a [Github Issue](https://github.com/ElectronicWar/nbs-irc/issues).
+
+Code contributions are accepted via pull requests. Please use the latest official mIRC release for development and include required minimal version for your changes if you tap into newer APIs.  Thank you!
