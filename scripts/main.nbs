@@ -735,7 +735,7 @@ alias n.songannounce {
     if ([folder] isin %wa.in) var %wa.folder = $gettok(%x,-2,92)
     if ([artist] isin %wa.in) var %wa.artist = $qwa(artist)
     if ([title] isin %wa.in) var %wa.title = $qwa(title)
-    if ([type] isin %wa.in) var %wa.type = $iif(/ isin $gettok(%x,-1,46),stream,$gettok(%x,-1,46)))
+    if ([type] isin %wa.in) var %wa.type = $iif(/ isin $gettok(%x,-1,46),stream,$gettok(%x,-1,46))
     if ([kbps] isin %wa.in) var %wa.bitrate = $swamp(bitrate)
     if ([album] isin %wa.in) var %wa.album  = $qwa(album)
     var %wa.out = $replace(%wa.in,âbåld,,âcålår,,âånderlajn,,âcläör,,[random],$read(config\mp3.txt), $& 
@@ -4581,7 +4581,7 @@ on ^*:KICK:#:{
     }      
   }
 }
-on ^*:BAN:# {
+on ^*:BAN:#: {
   haltdef 
   if ($me isop #) && ($hget(nbs,banskydd) == 1) && ($banmask iswm $address($me,5)) && ($nick != $me) {
     !raw -q mode # -ob $nick $banmask $+ $crlf $+ KICK # $nick : $+ $hget(nbs,bsmed)
