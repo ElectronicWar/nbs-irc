@@ -1362,7 +1362,7 @@ on ^*:notice:*:*:{
   }
   elseif ($n.unet) && ($nick == x) {
     if ($mid($1,2,-1) ischan) n.echo notice -t $mid($1,2,-1) $kl($nick) $1- 
-    else n.echo notice -atgi4 $kl:($nick) $1-
+    else n.echo notice -agi4 $asctime(%timestamp, $n.timestamp) $npre $kl:($nick) $1-
   }
   elseif ($nick === ChanServ) && ($mid($1,2,-1) ischan) n.echo notice -t $mid($1,2,-1) $kl($nick) $1-
   elseif ($1-2 === DCC Send) && ($3) {
