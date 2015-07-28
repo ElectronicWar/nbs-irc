@@ -301,7 +301,8 @@ alias n.echo {
     echo $color($1) $replace($2,a,s) $+ i4 $npre $3-
     scid -r
   }
-  else echo $color($1) $2 $+ i4 $npre $3-
+  elseif (t isin $2) echo $color($1) $2 $+ i4 $npre $3-
+  else echo $color($1) $2 $+ i4 $3-
 }
 alias month {
   if ($1 isnum 1-12) {
