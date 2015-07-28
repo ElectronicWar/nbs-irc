@@ -1288,18 +1288,24 @@ alias nickserv_ghost {
 }
 on ^*:snotice:*:{
   haltdef
+
+  var %timestamp = $iif($msgstamp, $msgstamp, $ctime)
+  
   if ($nick == irc.psychoid.net) { 
     n.bnc psyBNC
     echo -tm $bncwin(psyBNC,$cid) - $1-
   }
   elseif ($nick == shroudbnc.info) set %sbnc. [ $+ [ $cid ] ] 1
-  else echo $color(notice) -stq $npre $par($nick) $1-
+  else echo $color(notice) -sq $asctime(%timestamp, $n.timestamp) $npre $par($nick) $1-
 }
 
 on ^*:notice:*:*:{
   haltdef
+
+  var %timestamp = $iif($msgstamp, $msgstamp, $ctime)
+  
   if ($target ischan) {
-    echo $color(notice) -tgm $target $pre $par($+($cmode($nick,$target),:,$target)) $1-
+    echo $color(notice) -gm $target $asctime(%timestamp, $n.timestamp) $pre $par($+($cmode($nick,$target),:,$target)) $1-
     if ($chr(1) $+ # isin $hget(prot,chans)) && ($me isop $target) || ($me ishop $target) {
       if (($nick isop #) || ($nick ishop #)) && (!$hget(prot,$+(#,punishops))) return
       if ($hget(prot,$+(#,caps)) == 1) n.capss $target $nick $1-
@@ -1359,10 +1365,10 @@ on ^*:notice:*:*:{
   }
   elseif ($nick === ChanServ) && ($mid($1,2,-1) ischan) n.echo notice -t $mid($1,2,-1) $kl($nick) $1-
   elseif ($1-2 === DCC Send) && ($3) {
-    n.echo notice -seti4 $kl:(DCC Send from $nick) $deltok($3-,-1,32) $par($mid($gettok($3-,-1,32),2,-1))
+    n.echo notice -sei4 $asctime(%timestamp, $n.timestamp) $kl:(DCC Send from $nick) $deltok($3-,-1,32) $par($mid($gettok($3-,-1,32),2,-1))
   }
   else {
-    n.echo notice -atmi4 $kl:(notice from $nick) $1-
+    n.echo notice -ami4 $asctime(%timestamp, $n.timestamp) $kl:(notice from $nick) $1-
   }
   if ($nick === NickServ) && ($ncfg(nickserv_on) == 1) {
     if (nickname is registered isin $1-) && ($exists(config\nickserv- $+ $network $+ .txt)) {
