@@ -1366,10 +1366,10 @@ on ^*:notice:*:*:{
   }
   elseif ($nick === ChanServ) && ($mid($1,2,-1) ischan) n.echo notice -t $mid($1,2,-1) $kl($nick) $1-
   elseif ($1-2 === DCC Send) && ($3) {
-    n.echo notice -sei4 $asctime(%timestamp, $n.timestamp) $kl:(DCC Send from $nick) $deltok($3-,-1,32) $par($mid($gettok($3-,-1,32),2,-1))
+    n.echo notice -sei4 $asctime(%timestamp, $n.timestamp) $npre $kl:(DCC Send from $nick) $deltok($3-,-1,32) $par($mid($gettok($3-,-1,32),2,-1))
   }
   else {
-    n.echo notice -ami4 $asctime(%timestamp, $n.timestamp) $kl:(notice from $nick) $1-
+    n.echo notice -ami4 $asctime(%timestamp, $n.timestamp) $npre $kl:(notice from $nick) $1-
   }
   if ($nick === NickServ) && ($ncfg(nickserv_on) == 1) {
     if (nickname is registered isin $1-) && ($exists(config\nickserv- $+ $network $+ .txt)) {
