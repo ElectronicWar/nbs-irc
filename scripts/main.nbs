@@ -275,7 +275,7 @@ alias slog {
     var %s.file = $n.log($active)
     if (!$isfile(%s.file)) n.echo other -atg /slog: no log file found for $active
     else {
-      var %s.win = @search:  $+ $nopath(%s.file), %t = $ticks
+      var %s.win = @search:  $+ $nopath(%s.file), %t = $ticks
       if ($file(%s.file).size > 10000000) {
         if (!$n.input(This is a very large log file ( $+ $round($calc($file(%s.file).size /1024/1024),2) MB) $+ $c44 searching it will take some time. Do you want to continue?,y/n)) return
       }
@@ -643,7 +643,7 @@ alias aj {
         var %joincpw = %joincpw $gettok($read(%a,%i),1,32) $+ $chr(32)
         var %joinpwds = %joinpwds $gettok($read(%a,%i),2,32) $+ $chr(32)        
       }     
-      else var %joinchans = %joinchans $gettok($read(%a,%i),1,32)) $+ $chr(32)
+      else var %joinchans = %joinchans $gettok($read(%a,%i),1,32) $+ $chr(32)
       inc %newchans
     }
     inc %i
@@ -675,12 +675,12 @@ alias ci {
   if (!$1) return
   return $round($calc($calc($calc($ticks - $hget(temp,ci. [ $+ [ $cid ] $+ ] . [ $+ [ $1 ] ])) / 1000) / 60),0)
 }
-on *:INPUT:@psyBNC (*):{
+on *:INPUT:@psyBNC (*):{
   if (($left($1,1) == /) && (!$ctrlenter)) { return }  
   .!msg -psybnc $1-
   echo $color(notice) -at - $1-
 }
-on *:INPUT:@sBNC (*):{
+on *:INPUT:@sBNC (*):{
   if (($left($1,1) == /) && (!$ctrlenter)) { return }  
   .!msg -sBNC $1-
   echo $color(notice) -at - $1-
@@ -1053,8 +1053,8 @@ alias n.highlight {
     inc -u10 %tmp.nbf
   }
   if ($hget(nbs,nickwin) == 1) {
-    if (!window(@highlights ( $+ $cid $+ )))  window -k0n @highlights ( $+ $cid $+ )
-    var %echo = @highlights ( $+ $cid $+ )
+    if (!window(@highlights ( $+ $cid $+ )))  window -k0n @highlights ( $+ $cid $+ )
+    var %echo = @highlights ( $+ $cid $+ )
   }
   else var %echo = -s
   echo $color(other) %echo _________________________________________________
@@ -1122,7 +1122,7 @@ alias n.spams {
     if ($hget(prot,$+($1,advertising.ban)) == 1) ban $iif($hget(prot,$+($1,bantime)) isnum 1-,-u $+ $calc($ifmatch *60)) $1-2 $ncfg(ban_mask)
     kick $1-2 $iif($hget(prot,$+($1,advertising.kickmsg)),$ifmatch,no advertising)
   }
-  elseif ($hget(prot,$+($1,advertising.type)) == 1) && (*join*#?* iswm $3-) || */j*#?* iswm $3-) {
+  elseif ($hget(prot,$+($1,advertising.type)) == 1) && (*join*#?* iswm $3-) || (*/j*#?* iswm $3-) {
     if ($hget(prot,$+($1,advertising.ban)) == 1) ban $iif($hget(prot,$+($1,bantime)) isnum 1-,-u $+ $calc($ifmatch *60)) $1-2 $ncfg(ban_mask)
     kick $1-2 $iif($hget(prot,$+($1,advertising.kickmsg)),$ifmatch,no advertising)
   }
@@ -1290,7 +1290,7 @@ on ^*:snotice:*:{
   haltdef
 
   var %timestamp = $iif($msgstamp, $msgstamp, $ctime)
-  
+
   if ($nick == irc.psychoid.net) { 
     n.bnc psyBNC
     echo -tm $bncwin(psyBNC,$cid) - $1-
@@ -1303,7 +1303,7 @@ on ^*:notice:*:*:{
   haltdef
 
   var %timestamp = $iif($msgstamp, $msgstamp, $ctime)
-  
+
   if ($target ischan) {
     echo $color(notice) -gm $target $asctime(%timestamp, $n.timestamp) $pre $par($+($cmode($nick,$target),:,$target)) $1-
     if ($chr(1) $+ # isin $hget(prot,chans)) && ($me isop $target) || ($me ishop $target) {
@@ -1387,8 +1387,8 @@ on ^*:notice:*:*:{
 }
 alias back if ($away) dlg back
 on *:APPACTIVE:titleupdate
-on ^*:CLOSE:@psyBNC (*):if ($window(-psybnc)) close -m -psyBNC
-on ^*:CLOSE:@sBNC (*):if ($window(-sbnc)) close -m -sBNC
+on ^*:CLOSE:@psyBNC (*):if ($window(-psybnc)) close -m -psyBNC
+on ^*:CLOSE:@sBNC (*):if ($window(-sbnc)) close -m -sBNC
 alias echoall {
   if (!$1) { return }
   var %i = 1  
@@ -2443,16 +2443,16 @@ dialog misc {
 on *:dialog:misc:init:0:{
   if ($ncfg(ar_time) isnum) did -a misc 9 $ncfg(ar_time) 
   if ($ncfg(whois) == @whois) did -c misc 18
-  did -a misc 20 *!ident@host.com $str( ,99) z
-  did -a misc 20 *!*ident@host.com (default) $str( ,99) 1
-  did -a misc 20 *!*@host.com $str( ,99) 2
-  did -a misc 20 *!*ident@*.com $str( ,99) 3
-  did -a misc 20 *!*@*.com $str( ,99) 4
-  did -a misc 20 nick!ident@host.com $str( ,99) 5
-  did -a misc 20 nick!*ident@host.com $str( ,99) 6
-  did -a misc 20 nick!*@host.com $str( ,99) 7
-  did -a misc 20 nick!*ident@*.com $str( ,99) 8
-  did -a misc 20 nick!*@*.com $str( ,99) 9
+  did -a misc 20 *!ident@host.com $str( ,99) z
+  did -a misc 20 *!*ident@host.com (default) $str( ,99) 1
+  did -a misc 20 *!*@host.com $str( ,99) 2
+  did -a misc 20 *!*ident@*.com $str( ,99) 3
+  did -a misc 20 *!*@*.com $str( ,99) 4
+  did -a misc 20 nick!ident@host.com $str( ,99) 5
+  did -a misc 20 nick!*ident@host.com $str( ,99) 6
+  did -a misc 20 nick!*@host.com $str( ,99) 7
+  did -a misc 20 nick!*ident@*.com $str( ,99) 8
+  did -a misc 20 nick!*@*.com $str( ,99) 9
   if ($ncfg(ban_mask) isnum) did -c misc 20 $calc($ifmatch +1)
   elseif ($ncfg(ban_mask) == z) did -c misc 20 1
   n.ds cr 26 whois_on_kick
@@ -4227,7 +4227,7 @@ on ^*:TEXT:*:#:{
 
   ; Add support for proper playback buffer timestamps which use server-time or znc.in/server-time[-iso] 
   var %timestamp = $iif($msgstamp, $msgstamp, $ctime)
-  
+
   if ($hget(nbs,win_ashow) == 1) window -w $chan
   hadd -m temp ci. [ $+ [ $cid ] $+ ] . [ $+ [ $chan ] ] $ticks
   hadd -m temp text $color(normal) -mlbfi4 # $asctime(%timestamp, $n.timestamp) $replace($nick.style,<mode>,$cmode($nick,$chan,o),<nick>,$nick) $+  $1-
@@ -4336,7 +4336,7 @@ on *:OPEN:?:*:{
   else {
     n.query.stats $nick $address
     if ($ncfg(privpip) == 1) && ($ncfg(query_sound_onopen == 1)) $ncfg(privljud)
-    if ($n.bluser($fulladdress)) echo $color(info) -t $nick $npre User is blacklisted $par($gettok(%bltmp,2-,44)))
+    if ($n.bluser($fulladdress)) echo $color(info) -t $nick $npre User is blacklisted $par($gettok(%bltmp,2-,44))
     if ($hget(nbs,popup_query) == 1) && ($ncfg(popup_query_always) != 1) n.ptext $nick $chr(1) msg from $nick $chr(1) $replace($nick.style,<mode>,$null,<nick>,$nick)  $+ $eval($1-,1)
   }
 }
@@ -4448,7 +4448,7 @@ alias notice {
 alias ctcp {
   if ($isid) return
   if ($2 == ping) set %ctcp.ping.ticks $ticks
-  n.echo ctcp -atgq $kl:(CTCP to $1) $upper($2)) $3-
+  n.echo ctcp -atgq $kl:(CTCP to $1) $upper($2) $3-
   !.ctcp $1-
 }
 alias dcc {
@@ -4768,7 +4768,7 @@ raw 311:*:{
   unset %w-*
   if (%whois.idle != 1) {
     if ($ncfg(whois) == @whois) { 
-      set %w-dest @whois ( $+ $cid $+ )
+      set %w-dest @whois ( $+ $cid $+ )
       if (!$window(%w-dest)) {
         if ($ncfg(whois_inside) == 1) { 
           window -k0n %w-dest 
@@ -4862,7 +4862,7 @@ raw 314:*:{
   unset %w-*
   if (%whois.idle != 1) {
     if ($ncfg(whois) == @whois) { 
-      set %w-dest @whois ( $+ $cid $+ )
+      set %w-dest @whois ( $+ $cid $+ )
       if (!$window(%w-dest)) {
         if ($ncfg(whois_inside) == 1) { 
           window -k0n %w-dest 
@@ -5339,8 +5339,8 @@ menu channel {
   Change nick:editbox -a /nick $me
   -
   Away
-  .$iif(!$away,Set away (default F3),$style(2) Set away (default F3))):awaysys 
-  .$iif($away,Return (default F4),$style(2) Return (default F4))):back
+  .$iif(!$away,Set away (default F3),$style(2) Set away (default F3)):awaysys 
+  .$iif($away,Return (default F4),$style(2) Return (default F4)):back
   .-
   .$iif($away,Change away msg,$style(2) Change away message):away $$n.input(Enter new away message:)
 }
@@ -5374,7 +5374,7 @@ menu query {
   Logfile
   .View log:logg
   .View log (external):run $n.log($active)
-  .Search in log:slog $$n.input(Search for:))
+  .Search in log:slog $$n.input(Search for:)
   .Export/save log:exportlog $n.log($active)
   -
   DCC/CTCP
@@ -5401,8 +5401,8 @@ menu menubar {
   .Leave all channels (reason):partall $$n.input(Enter part reason:)
   .-
   Away
-  .$iif(!$away,Set away (F3),$style(2) Set away (F3))):awaysys 
-  .$iif($away,Return (F4),$style(2) Return (F4))):back
+  .$iif(!$away,Set away (F3),$style(2) Set away (F3)):awaysys 
+  .$iif($away,Return (F4),$style(2) Return (F4)):back
   .-
   .$iif($away,Change away msg,$style(2) Change away message):away $$n.input(Enter new away message:)
   -
@@ -5416,14 +5416,14 @@ menu @previewx {
   sclick:window -a @preview
   rclick:close -@ @preview*
 }
-menu @whois (*),@highlights (*) {
+menu @whois (*),@highlights (*) {
   dclick:{
     if ($window($active).mdi) window -n $active
     else close -@ $active
   }
   Settings:misc
 }
-menu @psybnc (*) {
+menu @psybnc (*) {
   Play private log:!raw -q PLAYPRIVATELOG
   Erase private log:!raw -q ERASEPRIVATELOG
   -
@@ -5442,7 +5442,7 @@ menu @psybnc (*) {
   .bquit:!raw -q bquit
   .jump:!raw -q bjump
 }
-menu @sbnc (*) {
+menu @sbnc (*) {
   Read log:n.bnc sbnc read
   Erase log:n.bnc sbnc erase
   -
@@ -5478,7 +5478,7 @@ menu @logviewer {
   $iif($sline(@logviewer,0) && $left($sline(@logviewer,1),1) != [,Rename log) { 
     var %file = $+(",%lv.dir,$sline(@logviewer,1),")
     if ($exists(%file)) {
-      var %newname = $n.input(Enter new name (name.log):,$nopath(%file))"
+      var %newname = $n.input(Enter new name (name.log):,$nopath(%file))
       if (!%newname) { return }
       var %newfile = $+(",%lv.dir,$iif($right(%newname,4) == .log,%newname,$+(%newname,.log)),")
     }
@@ -5513,7 +5513,7 @@ menu @logviewer {
   $iif($sline(@logviewer,0) && $left($sline(@logviewer,1),1) == [,Open selected folder):run $+(",%lv.dir,$mid($sline(@logviewer,1),3,-2),")
   Open current folder:run $+(",%lv.dir,")
 }
-menu @search*,@log*,@clones*,@whois (*),@psybnc (*),@sbnc (*),@highlights (*) {
+menu @search*,@log*,@clones*,@whois (*),@psybnc (*),@sbnc (*),@highlights (*) {
   -
   Clear:clear
   Close:close -@ $active
