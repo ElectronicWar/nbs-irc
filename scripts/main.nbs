@@ -1054,10 +1054,15 @@ alias n.highlight {
     inc -u10 %tmp.nbf
   }
   if ($hget(nbs,nickwin) == 1) {
-    if (!window(@highlights ( $+ $cid $+ )))  window -k0n @highlights ( $+ $cid $+ )
-    var %echo = @highlights ( $+ $cid $+ )
+    var %highlightwindow = @highlights $+ _ $+ $cid
+    if ($window(%highlightwindow) == $null) {
+      window -k0n %highlightwindow
+    }
+    var %echo = %highlightwindow
   }
-  else var %echo = -s
+  else {
+    var %echo = -s
+  } 
   echo $color(other) %echo _________________________________________________
   echo %echo $timestamp $replace($nick.style,<mode>,$cmode($nick,$chan,o),<nick>,$nick) $+  $replace($1-,$me, $+ $me $+ )
   echo %echo $kl(#) - $kl($date)
