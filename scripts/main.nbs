@@ -2930,7 +2930,7 @@ dialog om {
   text "", 30, 10 47 98 16
   icon 4, 125 9 16 16,  nbs.ico, 0, noborder
   link "nbs-irc.net", 2, 6 81 35 8
-  link "nbs-irc.net/forum", 3, 6 88 51 8
+  link "github.com/ElectronicWar/nbs-irc", 3, 6 88 150 8
   link "#nbs-irc", 5, 6 70 21 8
   text "on QuakeNet", 6, 28 70 38 8
   button "Close", 1, 110 103 37 11, ok
@@ -2941,8 +2941,8 @@ dialog om {
 on *:dialog:om:init:0:{
   set -u1 %tmp.aboutblock 1
   did -a om 10 nbs-irc $n.version for mIRC 7.33+
-  did -a om 20 Created and maintained by Dibbe with some help from haxninja
-  did -a om 30 Annorax, Maverick, Specter2, Leech, slanne and uK
+  did -a om 20 Created by Dibbe && haxninja, maintained by H4ndy @ GitHub
+  did -a om 30 Annorax, Maverick, Specter2, Leech, slanne, uK and Dozer
   n.showversion 100
   did -f om 10
 }
@@ -2952,7 +2952,7 @@ alias n.showversion {
 }
 
 on *:dialog:om:sclick:2:if (!%tmp.aboutblock) n.url http://nbs-irc.net
-on *:dialog:om:sclick:3:if (!%tmp.aboutblock) n.url http://nbs-irc.net/forum
+on *:dialog:om:sclick:3:if (!%tmp.aboutblock) n.url https://github.com/ElectronicWar/nbs-irc
 on *:dialog:om:sclick:4:{
   set %about.icon 16
   .timer -m 20 70 about.iconchanger
