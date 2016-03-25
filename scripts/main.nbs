@@ -4358,8 +4358,13 @@ on ^*:RAWMODE:#:{
     }
     echo $color(mode) -ti4 # $npre $+  $nick $par(4 $+ $1) $2- $iif(%o == 1,$par(F6: ban))
   }
-  else $iif($hget(netsplit, [ [ $cid ] $+ ] . [ $+ [ $2 ] ]),.timer -m 1 1900) echo $color(mode) -ti4 # $npre $+  $nick $par($1) $iif($2,$2-,#)
-  if ($me isin $2) && ($hget(nbs,popup_other) == 1) n.ptext # $chr(1) Channel mode: # $chr(1) $npre $+  $nick $par($1) $replace($2-,$me, $+ $me $+ ) $iif($cid != $activecid,$par($network))
+  else {
+    $iif($hget(netsplit, [ [ $cid ] $+ ] . [ $+ [ $2 ] ]),.timer -m 1 1900) 
+    echo $color(mode) -ti4 # $npre $+  $nick $par($1) $iif($2,$2-,#)
+  }
+  if ($me isin $2) && ($hget(nbs,popup_other) == 1) {
+    n.ptext # $chr(1) Channel mode: # $chr(1) $npre $+  $nick $par($1) $replace($2-,$me, $+ $me $+ ) $iif($cid != $activecid,$par($network))
+  }
 }
 on ^*:DEOP:#:{
   if ($opnick == $me) {
