@@ -11,6 +11,9 @@ licensed under the MIT license, see LICENSE.
 * Full support for ZNC 1.5+ playback buffer timestamps (IRCv3 server-time extension)
 * Support for latest mIRC, starting at 7.33
 
+## Planned Features
+* Looking into building an installer like the original nbs-irc is using. Any help with that is very appreciated.
+
 ## Requirements
 mIRC 7.33 or newer is required.
 
@@ -18,3 +21,6 @@ mIRC 7.33 or newer is required.
 Please report problems, bugs, improvements or features by opening a [Github Issue](https://github.com/ElectronicWar/nbs-irc/issues).
 
 Code contributions are accepted via pull requests. Please use the latest official mIRC release for development and include required minimal version for your changes if you tap into newer APIs.  Thank you!
+
+## Contact
+Some regulars and myself are usually available at [#nbs-irc @ QuakeNet](irc://irc.quakenet.org/nbs-irc) for anything nbs-irc related. Please note that this is a very slow channel and we might be AFK. It's usually better to open an issue for anything bug-related.
