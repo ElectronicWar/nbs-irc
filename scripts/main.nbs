@@ -1184,10 +1184,10 @@ alias clonescan {
 }
 alias vote {
   if (%vote) { n.echo info -atg there is already an vote in progress | return }
-  if (!$server) { n.echo -atg info not connected | return }
+  if (!$server) { n.echo info -atg not connected | return }
   if ($active !ischan) { n.echo info -atg not on a channel | return }
   set %vchan #
-  set %vote $n.input(Enter topic (yes/no))
+  set %vote $$n.input(Enter topic (yes/no))
   set %ja 0
   set %nej 0
   msg %vchan %vote (vote with !yes or !no)
