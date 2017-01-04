@@ -1,0 +1,798 @@
+<?xml version='1.0' encoding='windows-1252'?>
+<Wix xmlns='http://schemas.microsoft.com/wix/2006/wi'>
+	<Product Name='nbs-irc-2.43-160326-mod' Id='70d53ab5-bbaf-4ee3-9eab-175f7b9d0f84' UpgradeCode='f0984f4f-cf4d-4904-ab0c-760aa15abe32'
+    Language='1033' Codepage='1252' Version='2.43' Manufacturer='kapot'>
+
+    <Package Id='*' Keywords='Installer'
+      Description="nbs-irc-2.43-160326 Installer"
+      Comments='nbs-irc-2.43-160326' Manufacturer='kapot'
+      InstallerVersion='100' Languages='1033' Compressed='yes' SummaryCodepage='1252' />
+
+    <Property Id="MIRC">
+		<RegistrySearch 
+			Id="MLOC"
+			Root="HKLM"
+			Key="SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\mIRC"
+			Name="InstallLocation"
+			Type="raw" />
+	</Property>
+	<Condition Message="This application requires mIRC. Please install mIRC then run this installer again.">
+		<![CDATA[Installed OR MIRC]]>
+	</Condition>
+	
+	<Media Id='1' Cabinet='Main.cab' EmbedCab='yes' CompressionLevel='high' DiskPrompt="CD-ROM #1" />
+    <Property Id='DiskPrompt' Value="nbs-irc-2.43-160326 Installation [1]" />
+	<!-- Step 1: Define the directory structure -->
+        <Directory Id="TARGETDIR" Name="SourceDir">
+           	<Directory Id="AppDataFolder">
+                <Directory Id="APPLICATIONROOTDIRECTORY" Name="nbs-irc">
+					<Directory Id="SCRIPTS" Name="scripts">
+						<Directory Id="DLL" Name="dll">
+							<Directory Id="MDX" Name="mdx"/>
+						</Directory>
+						<Directory Id="IMG" Name="img"/>
+						<Directory Id="OTHER" Name="other"/>
+						<Directory Id="TBSKINS" Name="tbskins"/>
+						<Directory Id="TEMA" Name="tema"/>
+						<Directory Id="TXT" Name="txt"/>
+					</Directory>
+				</Directory>
+			</Directory>
+        	<Directory Id="ProgramMenuFolder">
+				<Directory Id="ApplicationProgramsFolder" Name="nbs-irc"/>
+			</Directory>
+		</Directory>
+	<!-- Step 2: Add files to your installer package -->
+	<DirectoryRef Id="ApplicationProgramsFolder">
+		<Component Id="ApplicationShortcut" Guid="2bf7da4f-9e33-4aaa-aeee-21b9cc0a45c2">
+			<Shortcut Id="ApplicationStartMenuShortcut" 
+                Name="nbs-irc"
+                Target="[MIRC]\mirc.exe"
+				Arguments="-r%appdata%\nbs-irc"
+                WorkingDirectory="APPLICATIONROOTDIRECTORY"
+				Icon="nbs.ico">
+				<Icon Id="nbs.ico" SourceFile=".\nbs-irc-2.43-160326-mod\nbs.ico" />
+			</Shortcut>
+			<RemoveFolder Id="ApplicationProgramsFolder" On="uninstall"/>
+			<RegistryValue Root="HKCU" Key="Software\Microsoft\nbs-irc" Name="installed" Type="integer" Value="1" KeyPath="yes"/>
+		</Component>
+	</DirectoryRef>
+	<DirectoryRef Id="APPLICATIONROOTDIRECTORY">
+		<Component Id='mirc.ini' Guid='103be215-8de6-468a-a598-97406feef94f'>
+			<File Id='mirc.ini' Name='mirc.ini' DiskId='1' Source='.\nbs-irc-2.43-160326-mod\mirc.ini' KeyPath='yes' />
+		</Component>
+		<Component Id='servers.ini' Guid='b7c3e95c-df41-480c-abdd-5b65c85c18d2'>
+			<File Id='servers.ini' Name='servers.ini' DiskId='1' Source='.\nbs-irc-2.43-160326-mod\servers.ini' KeyPath='yes' />
+		</Component>
+		<Component Id='fix' Guid='bd89b2a4-80af-4962-8d15-09d3e3e7805a'>
+			<File Id='fix' Name='fix' DiskId='1' Source='.\nbs-irc-2.43-160326-mod\fix' KeyPath='yes' />
+		</Component>
+		<Component Id='nbs.ico' Guid='bec91574-0720-4cb4-a838-950620ef0481'>
+			<File Id='nbs.ico' Name='nbs.ico' DiskId='1' Source='.\nbs-irc-2.43-160326-mod\nbs.ico' KeyPath='yes' />
+		</Component>
+		<Component Id='LICENSE' Guid='bdbb24fc-c7ec-4bd6-b2bf-df10d1facbd2'>
+			<File Id='LICENSE' Name='LICENSE' DiskId='1' Source='.\nbs-irc-2.43-160326-mod\LICENSE' KeyPath='yes' />
+		</Component>
+		<Component Id='popups.ini' Guid='abb4b983-0d0a-4c42-8da1-d64ad6c10d66'>
+			<File Id='popups.ini' Name='popups.ini' DiskId='1' Source='.\nbs-irc-2.43-160326-mod\popups.ini' KeyPath='yes' />
+		</Component>
+		<Component Id='README.MD' Guid='fb055e5f-9e6b-47a5-a568-91401f8e3ab0'>
+			<File Id='README.MD' Name='README.MD' DiskId='1' Source='.\nbs-irc-2.43-160326-mod\README.MD' KeyPath='yes' />
+		</Component>
+	</DirectoryRef>
+	<DirectoryRef Id="SCRIPTS">
+		<Component Id='alias1.nbs' Guid='910692a2-373c-4f54-bfe8-26ccc8116492'>
+			<File Id='alias1.nbs' Name='alias1.nbs' DiskId='1' Source='.\nbs-irc-2.43-160326-mod\scripts\alias1.nbs' KeyPath='yes' />
+		</Component>
+		<Component Id='alias2.nbs' Guid='c34f90a7-22d4-486c-acc9-410b66056772'>
+			<File Id='alias2.nbs' Name='alias2.nbs' DiskId='1' Source='.\nbs-irc-2.43-160326-mod\scripts\alias2.nbs' KeyPath='yes' />
+		</Component>
+		<Component Id='alias3.nbs' Guid='56703a78-3172-4494-b4b0-5579c4fc986d'>
+			<File Id='alias3.nbs' Name='alias3.nbs' DiskId='1' Source='.\nbs-irc-2.43-160326-mod\scripts\alias3.nbs' KeyPath='yes' />
+		</Component>
+		<Component Id='a_own.nbs' Guid='57781b69-60bf-4f83-8fd7-2dc83095480d'>
+			<File Id='a_own.nbs' Name='a-own.nbs' DiskId='1' Source='.\nbs-irc-2.43-160326-mod\scripts\a-own.nbs' KeyPath='yes' />
+		</Component>
+		<Component Id='beep.wav' Guid='4a841ae7-62e9-4ba9-ae26-5b73ad019518'>
+			<File Id='beep.wav' Name='beep.wav' DiskId='1' Source='.\nbs-irc-2.43-160326-mod\scripts\beep.wav' KeyPath='yes' />
+		</Component>
+		<Component Id='main.nbs' Guid='58f55b9d-8097-4d32-95b2-7976ead61f8f'>
+			<File Id='main.nbs' Name='main.nbs' DiskId='1' Source='.\nbs-irc-2.43-160326-mod\scripts\main.nbs' KeyPath='yes' />
+		</Component>
+		<Component Id='qry.wav' Guid='c416cdf8-3f8c-4356-aa4b-b16296aa0fb9'>
+			<File Id='qry.wav' Name='qry.wav' DiskId='1' Source='.\nbs-irc-2.43-160326-mod\scripts\qry.wav' KeyPath='yes' />
+		</Component>
+		<Component Id='qry_old.wav' Guid='9bbef51b-ec77-4ce5-827b-4a0256321e8c'>
+			<File Id='qry_old.wav' Name='qry_old.wav' DiskId='1' Source='.\nbs-irc-2.43-160326-mod\scripts\qry_old.wav' KeyPath='yes' />
+		</Component>
+		<Component Id='r_own.nbs' Guid='f7a8398d-dd5a-4f6a-a7b4-2aee23a0a399'>
+			<File Id='r_own.nbs' Name='r-own.nbs' DiskId='1' Source='.\nbs-irc-2.43-160326-mod\scripts\r-own.nbs' KeyPath='yes' />
+		</Component>		
+	</DirectoryRef>
+	<DirectoryRef Id="DLL">
+		<Component Id='aircdll.dll' Guid='61cfb7ab-1950-4ba4-8c19-7102d7b9a07e'>
+			<File Id='aircdll.dll' Name='aircdll.dll' DiskId='1' Source='.\nbs-irc-2.43-160326-mod\scripts\dll\aircdll.dll' KeyPath='yes' />
+		</Component>
+		<Component Id='darkenginex.dll' Guid='1bb7a22f-af07-4406-9cfb-80c9ffb995f3'>
+			<File Id='darkenginex.dll' Name='darkenginex.dll' DiskId='1' Source='.\nbs-irc-2.43-160326-mod\scripts\dll\darkenginex.dll' KeyPath='yes' />
+		</Component>
+		<Component Id='dcx.dll' Guid='1c3de8d7-3210-44e1-9593-0775597356fb'>
+			<File Id='dcx.dll' Name='dcx.dll' DiskId='1' Source='.\nbs-irc-2.43-160326-mod\scripts\dll\dcx.dll' KeyPath='yes' />
+		</Component>
+		<Component Id='i.dll' Guid='5868db87-f2cf-4a94-93f0-cb79422e88e3'>
+			<File Id='i.dll' Name='i.dll' DiskId='1' Source='.\nbs-irc-2.43-160326-mod\scripts\dll\i.dll' KeyPath='yes' />
+		</Component>
+		<Component Id='mDock61.dll' Guid='3a8bc495-b07f-4408-8630-c2a4be3afebd'>
+			<File Id='mDock61.dll' Name='mDock61.dll' DiskId='1' Source='.\nbs-irc-2.43-160326-mod\scripts\dll\mDock61.dll' KeyPath='yes' />
+		</Component>
+		<Component Id='swamp.dll' Guid='0b828d8b-d068-49ae-bcc7-7ad495a3a6f8'>
+			<File Id='swamp.dll' Name='swamp.dll' DiskId='1' Source='.\nbs-irc-2.43-160326-mod\scripts\dll\swamp.dll' KeyPath='yes' />
+		</Component>
+		<Component Id='tb.dll' Guid='5e565ced-ae87-4e4e-8f11-92c3fe34d4ae'>
+			<File Id='tb.dll' Name='tb.dll' DiskId='1' Source='.\nbs-irc-2.43-160326-mod\scripts\dll\tb.dll' KeyPath='yes' />
+		</Component>
+		<Component Id='wa_link.dll' Guid='4a223514-8d8c-4afa-89a7-2b3a0399177b'>
+			<File Id='wa_link.dll' Name='wa_link.dll' DiskId='1' Source='.\nbs-irc-2.43-160326-mod\scripts\dll\wa_link.dll' KeyPath='yes' />
+		</Component>
+		<Component Id='winamp.dll' Guid='37b8d465-bd14-4f84-a84c-8c27dccb4d4f'>
+			<File Id='winamp.dll' Name='winamp.dll' DiskId='1' Source='.\nbs-irc-2.43-160326-mod\scripts\dll\winamp.dll' KeyPath='yes' />
+		</Component>
+	</DirectoryRef>
+	<DirectoryRef Id="MDX">
+		<Component Id='BARS.MDX' Guid='fc83c809-b505-4e08-8d40-5f270b68675d'>
+			<File Id='BARS.MDX' Name='BARS.MDX' DiskId='1' Source='.\nbs-irc-2.43-160326-mod\scripts\dll\mdx\BARS.MDX' KeyPath='yes' />
+		</Component>
+		<Component Id='CTL_GEN.MDX' Guid='73b68669-8546-4bd6-8dd6-13b9d29bfcf3'>
+			<File Id='CTL_GEN.MDX' Name='CTL_GEN.MDX' DiskId='1' Source='.\nbs-irc-2.43-160326-mod\scripts\dll\mdx\CTL_GEN.MDX' KeyPath='yes' />
+		</Component>
+		<Component Id='dialog.mdx' Guid='3908cb5b-907e-470e-a8e9-94124dd845a3'>
+			<File Id='dialog.mdx' Name='dialog.mdx' DiskId='1' Source='.\nbs-irc-2.43-160326-mod\scripts\dll\mdx\dialog.mdx' KeyPath='yes' />
+		</Component>
+		<Component Id='mdx.dll' Guid='618f9e9d-bbd6-4045-991b-0c6c40f2e888'>
+			<File Id='mdx.dll' Name='mdx.dll' DiskId='1' Source='.\nbs-irc-2.43-160326-mod\scripts\dll\mdx\mdx.dll' KeyPath='yes' />
+		</Component>
+		<Component Id='VIEWS.MDX' Guid='8de7ccfe-62ab-40e0-835a-0926eea14b6f'>
+			<File Id='VIEWS.MDX' Name='VIEWS.MDX' DiskId='1' Source='.\nbs-irc-2.43-160326-mod\scripts\dll\mdx\VIEWS.MDX' KeyPath='yes' />
+		</Component>
+	</DirectoryRef>
+	<DirectoryRef Id="IMG">
+		<Component Id='taskbar.png' Guid='9d98865d-1664-4bc5-92de-351345524f74'>
+			<File Id='taskbar.png' Name='taskbar.png' DiskId='1' Source='.\nbs-irc-2.43-160326-mod\scripts\img\taskbar.png' KeyPath='yes' />
+		</Component>
+		<Component Id='tray.png' Guid='76fb52ea-f621-4490-aedf-6a60feeb7926'>
+			<File Id='tray.png' Name='tray.png' DiskId='1' Source='.\nbs-irc-2.43-160326-mod\scripts\img\tray.png' KeyPath='yes' />
+		</Component>
+	</DirectoryRef>
+	<DirectoryRef Id="OTHER">
+		<Component Id='version' Guid='360d25f6-147f-45a3-9991-317f5c7115b4'>
+			<File Id='version' Name='version' DiskId='1' Source='.\nbs-irc-2.43-160326-mod\scripts\other\version' KeyPath='yes' />
+		</Component>
+	</DirectoryRef>
+	<DirectoryRef Id="TEMA">
+		<Component Id='alien_blue.png' Guid='e885eb86-78d1-4c7a-b240-51d6a488c945'> 
+			<File Id='alien_blue.png' Name='alien-blue.png' DiskId='1' Source='.\nbs-irc-2.43-160326-mod\scripts\tema\alien-blue.png' KeyPath='yes' /> 
+		</Component>
+		<Component Id='alien_blue.tem' Guid='3bdc281c-5e6f-49f3-92ab-1093097839ff'> 
+			<File Id='alien_blue.tem' Name='alien-blue.tem' DiskId='1' Source='.\nbs-irc-2.43-160326-mod\scripts\tema\alien-blue.tem' KeyPath='yes' /> 
+		</Component>
+		<Component Id='alien_bright.png' Guid='3c65a3d4-00f3-4fdd-a2e1-e2c07a7f3189'> 
+			<File Id='alien_bright.png' Name='alien-bright.png' DiskId='1' Source='.\nbs-irc-2.43-160326-mod\scripts\tema\alien-bright.png' KeyPath='yes' /> 
+		</Component>
+		<Component Id='alien_bright.tem' Guid='2ffe5582-9dae-4ccc-97d9-3764eb91b90c'> 
+			<File Id='alien_bright.tem' Name='alien-bright.tem' DiskId='1' Source='.\nbs-irc-2.43-160326-mod\scripts\tema\alien-bright.tem' KeyPath='yes' /> 
+		</Component>
+		<Component Id='alien_bright2.png' Guid='906fb140-630f-4d85-b30e-2e1382264e40'> 
+			<File Id='alien_bright2.png' Name='alien-bright2.png' DiskId='1' Source='.\nbs-irc-2.43-160326-mod\scripts\tema\alien-bright2.png' KeyPath='yes' /> 
+		</Component>
+		<Component Id='alien_bright2.tem' Guid='a986d5e9-4bba-428f-a4e4-09405483f067'> 
+			<File Id='alien_bright2.tem' Name='alien-bright2.tem' DiskId='1' Source='.\nbs-irc-2.43-160326-mod\scripts\tema\alien-bright2.tem' KeyPath='yes' /> 
+		</Component>
+		<Component Id='alien_orange.png' Guid='919176a6-da8a-45ca-b76f-d7eb01b2571b'> 
+			<File Id='alien_orange.png' Name='alien-orange.png' DiskId='1' Source='.\nbs-irc-2.43-160326-mod\scripts\tema\alien-orange.png' KeyPath='yes' /> 
+		</Component>
+		<Component Id='alien_orange.tem' Guid='ddbf3ac6-09b4-42d0-a200-625ba895bd32'> 
+			<File Id='alien_orange.tem' Name='alien-orange.tem' DiskId='1' Source='.\nbs-irc-2.43-160326-mod\scripts\tema\alien-orange.tem' KeyPath='yes' /> 
+		</Component>
+		<Component Id='alien_red.png' Guid='b57d41aa-ab2a-4d2e-8cdb-f52ffedfcc76'> 
+			<File Id='alien_red.png' Name='alien-red.png' DiskId='1' Source='.\nbs-irc-2.43-160326-mod\scripts\tema\alien-red.png' KeyPath='yes' /> 
+		</Component>
+		<Component Id='alien_red.tem' Guid='2b82002f-9056-4c52-9df9-88fe3ca3e401'> 
+			<File Id='alien_red.tem' Name='alien-red.tem' DiskId='1' Source='.\nbs-irc-2.43-160326-mod\scripts\tema\alien-red.tem' KeyPath='yes' /> 
+		</Component>
+		<Component Id='alien.png' Guid='1f9c753d-a955-46ef-86b0-00de681649bc'> 
+			<File Id='alien.png' Name='alien.png' DiskId='1' Source='.\nbs-irc-2.43-160326-mod\scripts\tema\alien.png' KeyPath='yes' /> 
+		</Component>
+		<Component Id='alien.tem' Guid='13300285-3e7a-42f5-aefa-f34d492a65d0'> 
+			<File Id='alien.tem' Name='alien.tem' DiskId='1' Source='.\nbs-irc-2.43-160326-mod\scripts\tema\alien.tem' KeyPath='yes' /> 
+		</Component>
+		<Component Id='apelsinjuice_inverted.png' Guid='d4bdad0a-3821-4e44-9271-c04c432ab0c0'> 
+			<File Id='apelsinjuice_inverted.png' Name='apelsinjuice-inverted.png' DiskId='1' Source='.\nbs-irc-2.43-160326-mod\scripts\tema\apelsinjuice-inverted.png' KeyPath='yes' /> 
+		</Component>
+		<Component Id='apelsinjuice_inverted.tem' Guid='451c7a53-3185-4ac4-8f6f-448a390c2b2a'> 
+			<File Id='apelsinjuice_inverted.tem' Name='apelsinjuice-inverted.tem' DiskId='1' Source='.\nbs-irc-2.43-160326-mod\scripts\tema\apelsinjuice-inverted.tem' KeyPath='yes' /> 
+		</Component>
+		<Component Id='apelsinjuice1_1.png' Guid='79e4ea59-9a64-4663-9f8e-34afb049d190'> 
+			<File Id='apelsinjuice1_1.png' Name='apelsinjuice1-1.png' DiskId='1' Source='.\nbs-irc-2.43-160326-mod\scripts\tema\apelsinjuice1-1.png' KeyPath='yes' /> 
+		</Component>
+		<Component Id='apelsinjuice1_1.tem' Guid='391d38c7-9bdf-431d-9615-c01ffd64964a'> 
+			<File Id='apelsinjuice1_1.tem' Name='apelsinjuice1-1.tem' DiskId='1' Source='.\nbs-irc-2.43-160326-mod\scripts\tema\apelsinjuice1-1.tem' KeyPath='yes' /> 
+		</Component>
+		<Component Id='apelsinjuice1.png' Guid='bd593489-35fb-4504-9d87-1d6f4fbb4c57'> 
+			<File Id='apelsinjuice1.png' Name='apelsinjuice1.png' DiskId='1' Source='.\nbs-irc-2.43-160326-mod\scripts\tema\apelsinjuice1.png' KeyPath='yes' /> 
+		</Component>
+		<Component Id='apelsinjuice1.tem' Guid='1fd04ee9-442d-4a2e-b64e-c5a2b29bda2d'> 
+			<File Id='apelsinjuice1.tem' Name='apelsinjuice1.tem' DiskId='1' Source='.\nbs-irc-2.43-160326-mod\scripts\tema\apelsinjuice1.tem' KeyPath='yes' /> 
+		</Component>
+		<Component Id='babyblue.png' Guid='ac338b69-b810-4da5-a905-c9050c07fafc'> 
+			<File Id='babyblue.png' Name='babyblue.png' DiskId='1' Source='.\nbs-irc-2.43-160326-mod\scripts\tema\babyblue.png' KeyPath='yes' /> 
+		</Component>
+		<Component Id='babyblue.tem' Guid='10cdccd8-6d95-4f62-bcd6-93b30bbca6c7'> 
+			<File Id='babyblue.tem' Name='babyblue.tem' DiskId='1' Source='.\nbs-irc-2.43-160326-mod\scripts\tema\babyblue.tem' KeyPath='yes' /> 
+		</Component>
+		<Component Id='bee_sting.png' Guid='665f7cc4-a1e3-41e4-ab8c-1eb79c3fd10b'> 
+			<File Id='bee_sting.png' Name='bee_sting.png' DiskId='1' Source='.\nbs-irc-2.43-160326-mod\scripts\tema\bee_sting.png' KeyPath='yes' /> 
+		</Component>
+		<Component Id='bee_sting.tem' Guid='d3349a34-0f75-482b-a752-56f79cfc2684'> 
+			<File Id='bee_sting.tem' Name='bee_sting.tem' DiskId='1' Source='.\nbs-irc-2.43-160326-mod\scripts\tema\bee_sting.tem' KeyPath='yes' /> 
+		</Component>
+		<Component Id='beige.png' Guid='d19705af-3f0c-46f1-ab0d-121759fe7efe'> 
+			<File Id='beige.png' Name='beige.png' DiskId='1' Source='.\nbs-irc-2.43-160326-mod\scripts\tema\beige.png' KeyPath='yes' /> 
+		</Component>
+		<Component Id='beige.tem' Guid='c70645ad-c3d3-4ae7-8c32-29f614aa9657'> 
+			<File Id='beige.tem' Name='beige.tem' DiskId='1' Source='.\nbs-irc-2.43-160326-mod\scripts\tema\beige.tem' KeyPath='yes' /> 
+		</Component>
+		<Component Id='blank.png' Guid='940fffb7-0dcf-4b19-bcb2-f9307927643c'> 
+			<File Id='blank.png' Name='blank.png' DiskId='1' Source='.\nbs-irc-2.43-160326-mod\scripts\tema\blank.png' KeyPath='yes' /> 
+		</Component>
+		<Component Id='blue.png' Guid='c542a2b3-5d3d-4cf7-af59-ffd96a8d05b3'> 
+			<File Id='blue.png' Name='blue.png' DiskId='1' Source='.\nbs-irc-2.43-160326-mod\scripts\tema\blue.png' KeyPath='yes' /> 
+		</Component>
+		<Component Id='blue.tem' Guid='dc584493-c727-4a90-8578-4b72af69643b'> 
+			<File Id='blue.tem' Name='blue.tem' DiskId='1' Source='.\nbs-irc-2.43-160326-mod\scripts\tema\blue.tem' KeyPath='yes' /> 
+		</Component>
+		<Component Id='cb4.png' Guid='5b9cad9f-800a-4fd7-b406-878810353c7e'> 
+			<File Id='cb4.png' Name='cb4.png' DiskId='1' Source='.\nbs-irc-2.43-160326-mod\scripts\tema\cb4.png' KeyPath='yes' /> 
+		</Component>
+		<Component Id='cb4.tem' Guid='5a320456-0753-4dbe-8e5b-14cbf5f6df4a'> 
+			<File Id='cb4.tem' Name='cb4.tem' DiskId='1' Source='.\nbs-irc-2.43-160326-mod\scripts\tema\cb4.tem' KeyPath='yes' /> 
+		</Component>
+		<Component Id='clean.png' Guid='b1474df5-56f9-438a-aef0-33e13bed84c9'> 
+			<File Id='clean.png' Name='clean.png' DiskId='1' Source='.\nbs-irc-2.43-160326-mod\scripts\tema\clean.png' KeyPath='yes' /> 
+		</Component>
+		<Component Id='clean.tem' Guid='0757a148-aba8-452d-b385-6e528f3cfa0e'> 
+			<File Id='clean.tem' Name='clean.tem' DiskId='1' Source='.\nbs-irc-2.43-160326-mod\scripts\tema\clean.tem' KeyPath='yes' /> 
+		</Component>
+		<Component Id='cold_bright.png' Guid='88af2bbb-6ee7-42bb-8d03-5f47e0b87994'> 
+			<File Id='cold_bright.png' Name='cold-bright.png' DiskId='1' Source='.\nbs-irc-2.43-160326-mod\scripts\tema\cold-bright.png' KeyPath='yes' /> 
+		</Component>
+		<Component Id='cold_bright.tem' Guid='322546c7-382a-4c7f-a65b-d6890d9c5cf6'> 
+			<File Id='cold_bright.tem' Name='cold-bright.tem' DiskId='1' Source='.\nbs-irc-2.43-160326-mod\scripts\tema\cold-bright.tem' KeyPath='yes' /> 
+		</Component>
+		<Component Id='cold_green.png' Guid='4bc2797f-313e-441e-86eb-3727421bbef3'> 
+			<File Id='cold_green.png' Name='cold-green.png' DiskId='1' Source='.\nbs-irc-2.43-160326-mod\scripts\tema\cold-green.png' KeyPath='yes' /> 
+		</Component>
+		<Component Id='cold_green.tem' Guid='bcebfc8f-3020-4b31-9baa-fbbc92bdaa9a'> 
+			<File Id='cold_green.tem' Name='cold-green.tem' DiskId='1' Source='.\nbs-irc-2.43-160326-mod\scripts\tema\cold-green.tem' KeyPath='yes' /> 
+		</Component>
+		<Component Id='cold_orange.png' Guid='62e53cd9-b943-4478-9188-4d5b3149b720'> 
+			<File Id='cold_orange.png' Name='cold-orange.png' DiskId='1' Source='.\nbs-irc-2.43-160326-mod\scripts\tema\cold-orange.png' KeyPath='yes' /> 
+		</Component>
+		<Component Id='cold_orange.tem' Guid='1c268a9e-210e-4c6b-ae64-ec60f21f8d49'> 
+			<File Id='cold_orange.tem' Name='cold-orange.tem' DiskId='1' Source='.\nbs-irc-2.43-160326-mod\scripts\tema\cold-orange.tem' KeyPath='yes' /> 
+		</Component>
+		<Component Id='cold_red.png' Guid='406fc45a-4fc1-4068-8923-89464a4589cf'> 
+			<File Id='cold_red.png' Name='cold-red.png' DiskId='1' Source='.\nbs-irc-2.43-160326-mod\scripts\tema\cold-red.png' KeyPath='yes' /> 
+		</Component>
+		<Component Id='cold_red.tem' Guid='1fd1112b-5d37-4a29-bd98-1216bfa77e17'> 
+			<File Id='cold_red.tem' Name='cold-red.tem' DiskId='1' Source='.\nbs-irc-2.43-160326-mod\scripts\tema\cold-red.tem' KeyPath='yes' /> 
+		</Component>
+		<Component Id='cold.png' Guid='d83bf463-17f9-4c5e-b3c5-7da6b7f12755'> 
+			<File Id='cold.png' Name='cold.png' DiskId='1' Source='.\nbs-irc-2.43-160326-mod\scripts\tema\cold.png' KeyPath='yes' /> 
+		</Component>
+		<Component Id='cold.tem' Guid='5a68a513-e525-40f6-93f5-8bf6844aaa7c'> 
+			<File Id='cold.tem' Name='cold.tem' DiskId='1' Source='.\nbs-irc-2.43-160326-mod\scripts\tema\cold.tem' KeyPath='yes' /> 
+		</Component>
+		<Component Id='creme.png' Guid='7004b8c0-a3f0-40c8-be93-0f40d952e10c'> 
+			<File Id='creme.png' Name='creme.png' DiskId='1' Source='.\nbs-irc-2.43-160326-mod\scripts\tema\creme.png' KeyPath='yes' /> 
+		</Component>
+		<Component Id='creme.tem' Guid='a798b686-78ba-4516-8117-fdd2d3ab4e4c'> 
+			<File Id='creme.tem' Name='creme.tem' DiskId='1' Source='.\nbs-irc-2.43-160326-mod\scripts\tema\creme.tem' KeyPath='yes' /> 
+		</Component>
+		<Component Id='dks.png' Guid='d89152cd-d65c-4661-b373-f1d842228cb1'> 
+			<File Id='dks.png' Name='dks.png' DiskId='1' Source='.\nbs-irc-2.43-160326-mod\scripts\tema\dks.png' KeyPath='yes' /> 
+		</Component>
+		<Component Id='dks.tem' Guid='80ac09d3-e1ac-4976-8ea4-03a72f422ebd'> 
+			<File Id='dks.tem' Name='dks.tem' DiskId='1' Source='.\nbs-irc-2.43-160326-mod\scripts\tema\dks.tem' KeyPath='yes' /> 
+		</Component>
+		<Component Id='dovium.png' Guid='8b9eefd3-5ea6-4dfe-84d2-0caebaed09ae'> 
+			<File Id='dovium.png' Name='dovium.png' DiskId='1' Source='.\nbs-irc-2.43-160326-mod\scripts\tema\dovium.png' KeyPath='yes' /> 
+		</Component>
+		<Component Id='dovium.tem' Guid='dc3024a0-8ff8-4de7-86e9-fe7513347f15'> 
+			<File Id='dovium.tem' Name='dovium.tem' DiskId='1' Source='.\nbs-irc-2.43-160326-mod\scripts\tema\dovium.tem' KeyPath='yes' /> 
+		</Component>
+		<Component Id='dusk_blue.png' Guid='e2d148a5-49ec-4660-bddb-3961790ede36'> 
+			<File Id='dusk_blue.png' Name='dusk-blue.png' DiskId='1' Source='.\nbs-irc-2.43-160326-mod\scripts\tema\dusk-blue.png' KeyPath='yes' /> 
+		</Component>
+		<Component Id='dusk_blue.tem' Guid='b6fa37c7-dfcd-4f17-a2ec-bc24f2d593a0'> 
+			<File Id='dusk_blue.tem' Name='dusk-blue.tem' DiskId='1' Source='.\nbs-irc-2.43-160326-mod\scripts\tema\dusk-blue.tem' KeyPath='yes' /> 
+		</Component>
+		<Component Id='dusk_green.png' Guid='0dfad137-7a0c-4874-a54e-297307302bbf'> 
+			<File Id='dusk_green.png' Name='dusk-green.png' DiskId='1' Source='.\nbs-irc-2.43-160326-mod\scripts\tema\dusk-green.png' KeyPath='yes' /> 
+		</Component>
+		<Component Id='dusk_green.tem' Guid='fce2a5fa-8f51-4b0e-b27e-85dc77e2ba26'> 
+			<File Id='dusk_green.tem' Name='dusk-green.tem' DiskId='1' Source='.\nbs-irc-2.43-160326-mod\scripts\tema\dusk-green.tem' KeyPath='yes' /> 
+		</Component>
+		<Component Id='dusk_pink.png' Guid='5a44fa89-78f3-4e45-8c6f-27146f8c99cb'> 
+			<File Id='dusk_pink.png' Name='dusk-pink.png' DiskId='1' Source='.\nbs-irc-2.43-160326-mod\scripts\tema\dusk-pink.png' KeyPath='yes' /> 
+		</Component>
+		<Component Id='dusk_pink.tem' Guid='e8557c52-9b3d-40ce-b15f-73194cf2bd44'> 
+			<File Id='dusk_pink.tem' Name='dusk-pink.tem' DiskId='1' Source='.\nbs-irc-2.43-160326-mod\scripts\tema\dusk-pink.tem' KeyPath='yes' /> 
+		</Component>
+		<Component Id='dusk_red.png' Guid='aa75b365-9925-428c-93dd-b86642297c8a'> 
+			<File Id='dusk_red.png' Name='dusk-red.png' DiskId='1' Source='.\nbs-irc-2.43-160326-mod\scripts\tema\dusk-red.png' KeyPath='yes' /> 
+		</Component>
+		<Component Id='dusk_red.tem' Guid='81b1a961-4104-4a5d-a3b3-e347c0f2763f'> 
+			<File Id='dusk_red.tem' Name='dusk-red.tem' DiskId='1' Source='.\nbs-irc-2.43-160326-mod\scripts\tema\dusk-red.tem' KeyPath='yes' /> 
+		</Component>
+		<Component Id='dusk.png' Guid='9bdd531c-bd44-413e-ab69-208ff100df39'> 
+			<File Id='dusk.png' Name='dusk.png' DiskId='1' Source='.\nbs-irc-2.43-160326-mod\scripts\tema\dusk.png' KeyPath='yes' /> 
+		</Component>
+		<Component Id='dusk.tem' Guid='c84e3b49-91e5-43ba-9191-f3a50b36a332'> 
+			<File Id='dusk.tem' Name='dusk.tem' DiskId='1' Source='.\nbs-irc-2.43-160326-mod\scripts\tema\dusk.tem' KeyPath='yes' /> 
+		</Component>
+		<Component Id='envision.png' Guid='87707a69-4266-41b1-929d-9b4707b6b141'> 
+			<File Id='envision.png' Name='envision.png' DiskId='1' Source='.\nbs-irc-2.43-160326-mod\scripts\tema\envision.png' KeyPath='yes' /> 
+		</Component>
+		<Component Id='envision.tem' Guid='acbd7940-4a14-4327-87da-139452af8019'> 
+			<File Id='envision.tem' Name='envision.tem' DiskId='1' Source='.\nbs-irc-2.43-160326-mod\scripts\tema\envision.tem' KeyPath='yes' /> 
+		</Component>
+		<Component Id='fragbite.png' Guid='72d55ebb-42da-40ca-98fd-07f4d18f22d9'> 
+			<File Id='fragbite.png' Name='fragbite.png' DiskId='1' Source='.\nbs-irc-2.43-160326-mod\scripts\tema\fragbite.png' KeyPath='yes' /> 
+		</Component>
+		<Component Id='fragbite.tem' Guid='938eefee-b81a-4ac1-8ec1-7de560b123df'> 
+			<File Id='fragbite.tem' Name='fragbite.tem' DiskId='1' Source='.\nbs-irc-2.43-160326-mod\scripts\tema\fragbite.tem' KeyPath='yes' /> 
+		</Component>
+		<Component Id='fusion.png' Guid='a28ea2ae-cbac-4388-8805-e3a554de4f3a'> 
+			<File Id='fusion.png' Name='fusion.png' DiskId='1' Source='.\nbs-irc-2.43-160326-mod\scripts\tema\fusion.png' KeyPath='yes' /> 
+		</Component>
+		<Component Id='fusion.tem' Guid='bf9826a5-aa20-484d-a80a-ee612836aff1'> 
+			<File Id='fusion.tem' Name='fusion.tem' DiskId='1' Source='.\nbs-irc-2.43-160326-mod\scripts\tema\fusion.tem' KeyPath='yes' /> 
+		</Component>
+		<Component Id='grass.png' Guid='e63ae8ef-747d-4f18-90fd-c8a5f950f495'> 
+			<File Id='grass.png' Name='grass.png' DiskId='1' Source='.\nbs-irc-2.43-160326-mod\scripts\tema\grass.png' KeyPath='yes' /> 
+		</Component>
+		<Component Id='grass.tem' Guid='c9707093-b29b-45a1-9c83-983cba50bae9'> 
+			<File Id='grass.tem' Name='grass.tem' DiskId='1' Source='.\nbs-irc-2.43-160326-mod\scripts\tema\grass.tem' KeyPath='yes' /> 
+		</Component>
+		<Component Id='green.png' Guid='20b694b8-b285-4f1c-9dbb-ee32f3b6dfbe'> 
+			<File Id='green.png' Name='green.png' DiskId='1' Source='.\nbs-irc-2.43-160326-mod\scripts\tema\green.png' KeyPath='yes' /> 
+		</Component>
+		<Component Id='green.tem' Guid='ef15d41a-4608-427b-91d9-0abd5b471e15'> 
+			<File Id='green.tem' Name='green.tem' DiskId='1' Source='.\nbs-irc-2.43-160326-mod\scripts\tema\green.tem' KeyPath='yes' /> 
+		</Component>
+		<Component Id='grey.png' Guid='f30c76fd-f5a3-4d24-b050-79b498f241c2'> 
+			<File Id='grey.png' Name='grey.png' DiskId='1' Source='.\nbs-irc-2.43-160326-mod\scripts\tema\grey.png' KeyPath='yes' /> 
+		</Component>
+		<Component Id='grey.tem' Guid='577c6d59-a7ed-45ce-a730-b2d8e2633d00'> 
+			<File Id='grey.tem' Name='grey.tem' DiskId='1' Source='.\nbs-irc-2.43-160326-mod\scripts\tema\grey.tem' KeyPath='yes' /> 
+		</Component>
+		<Component Id='haxxor.png' Guid='4a5ce89e-cfd6-48b5-8f06-45a4cbb9c2db'> 
+			<File Id='haxxor.png' Name='haxxor.png' DiskId='1' Source='.\nbs-irc-2.43-160326-mod\scripts\tema\haxxor.png' KeyPath='yes' /> 
+		</Component>
+		<Component Id='haxxor.tem' Guid='f0530111-49fc-4c79-871c-7dad0114c1e6'> 
+			<File Id='haxxor.tem' Name='haxxor.tem' DiskId='1' Source='.\nbs-irc-2.43-160326-mod\scripts\tema\haxxor.tem' KeyPath='yes' /> 
+		</Component>
+		<Component Id='ice.png' Guid='a1b5f2b3-961f-457a-9d44-a499739463f0'> 
+			<File Id='ice.png' Name='ice.png' DiskId='1' Source='.\nbs-irc-2.43-160326-mod\scripts\tema\ice.png' KeyPath='yes' /> 
+		</Component>
+		<Component Id='ice.tem' Guid='c1ece45c-1482-4fed-92a0-72329b8e1b8b'> 
+			<File Id='ice.tem' Name='ice.tem' DiskId='1' Source='.\nbs-irc-2.43-160326-mod\scripts\tema\ice.tem' KeyPath='yes' /> 
+		</Component>
+		<Component Id='irssi.png' Guid='ee844bed-b19c-4c73-966e-331b80ea2bc2'> 
+			<File Id='irssi.png' Name='irssi.png' DiskId='1' Source='.\nbs-irc-2.43-160326-mod\scripts\tema\irssi.png' KeyPath='yes' /> 
+		</Component>
+		<Component Id='irssi.tem' Guid='bce765be-7344-4d23-b395-8a7baf490e96'> 
+			<File Id='irssi.tem' Name='irssi.tem' DiskId='1' Source='.\nbs-irc-2.43-160326-mod\scripts\tema\irssi.tem' KeyPath='yes' /> 
+		</Component>
+		<Component Id='leaf.png' Guid='ad726ad0-0505-4119-97a9-97789a396aa7'> 
+			<File Id='leaf.png' Name='leaf.png' DiskId='1' Source='.\nbs-irc-2.43-160326-mod\scripts\tema\leaf.png' KeyPath='yes' /> 
+		</Component>
+		<Component Id='leaf.tem' Guid='0785f111-2001-4e8f-9879-d6b79f1703f0'> 
+			<File Id='leaf.tem' Name='leaf.tem' DiskId='1' Source='.\nbs-irc-2.43-160326-mod\scripts\tema\leaf.tem' KeyPath='yes' /> 
+		</Component>
+		<Component Id='lightblue.png' Guid='99addd67-b31d-4be6-adca-f1cc073fa42f'> 
+			<File Id='lightblue.png' Name='lightblue.png' DiskId='1' Source='.\nbs-irc-2.43-160326-mod\scripts\tema\lightblue.png' KeyPath='yes' /> 
+		</Component>
+		<Component Id='lightblue.tem' Guid='774d1c89-3950-4921-8491-bdb7c19929ba'> 
+			<File Id='lightblue.tem' Name='lightblue.tem' DiskId='1' Source='.\nbs-irc-2.43-160326-mod\scripts\tema\lightblue.tem' KeyPath='yes' /> 
+		</Component>
+		<Component Id='lite.png' Guid='90cb32b3-a8f7-4b2d-a4f9-9adc7d1862b6'> 
+			<File Id='lite.png' Name='lite.png' DiskId='1' Source='.\nbs-irc-2.43-160326-mod\scripts\tema\lite.png' KeyPath='yes' /> 
+		</Component>
+		<Component Id='lite.tem' Guid='0becab25-1177-46fa-8699-8ba7030c90ea'> 
+			<File Id='lite.tem' Name='lite.tem' DiskId='1' Source='.\nbs-irc-2.43-160326-mod\scripts\tema\lite.tem' KeyPath='yes' /> 
+		</Component>
+		<Component Id='mauve_.png' Guid='5c3dab40-1faa-4a88-82d8-4241ebd3aa2b'> 
+			<File Id='mauve_.png' Name='mauve+.png' DiskId='1' Source='.\nbs-irc-2.43-160326-mod\scripts\tema\mauve+.png' KeyPath='yes' /> 
+		</Component>
+		<Component Id='mauve_.tem' Guid='9fac447a-608a-4018-a73b-dd967c411d96'> 
+			<File Id='mauve_.tem' Name='mauve+.tem' DiskId='1' Source='.\nbs-irc-2.43-160326-mod\scripts\tema\mauve+.tem' KeyPath='yes' /> 
+		</Component>
+		<Component Id='mauve.png' Guid='581538d3-5e8f-4c7d-874b-9dc1cc448c50'> 
+			<File Id='mauve.png' Name='mauve.png' DiskId='1' Source='.\nbs-irc-2.43-160326-mod\scripts\tema\mauve.png' KeyPath='yes' /> 
+		</Component>
+		<Component Id='mauve.tem' Guid='ac993aba-d79f-4a51-bf04-95361766a5cd'> 
+			<File Id='mauve.tem' Name='mauve.tem' DiskId='1' Source='.\nbs-irc-2.43-160326-mod\scripts\tema\mauve.tem' KeyPath='yes' /> 
+		</Component>
+		<Component Id='mIRC_black.png' Guid='52a6fda8-43ec-49d5-a8c3-8b5175250f19'> 
+			<File Id='mIRC_black.png' Name='mIRC-black.png' DiskId='1' Source='.\nbs-irc-2.43-160326-mod\scripts\tema\mIRC-black.png' KeyPath='yes' /> 
+		</Component>
+		<Component Id='mIRC_black.tem' Guid='d13d62a8-dc02-4a4a-bce4-33b8ab29f10f'> 
+			<File Id='mIRC_black.tem' Name='mIRC-black.tem' DiskId='1' Source='.\nbs-irc-2.43-160326-mod\scripts\tema\mIRC-black.tem' KeyPath='yes' /> 
+		</Component>
+		<Component Id='mIRC.png' Guid='940aeb32-bc84-4042-904d-a49b6947033c'> 
+			<File Id='mIRC.png' Name='mIRC.png' DiskId='1' Source='.\nbs-irc-2.43-160326-mod\scripts\tema\mIRC.png' KeyPath='yes' /> 
+		</Component>
+		<Component Id='mIRC.tem' Guid='68880075-9811-4bfd-9902-e743030c0426'> 
+			<File Id='mIRC.tem' Name='mIRC.tem' DiskId='1' Source='.\nbs-irc-2.43-160326-mod\scripts\tema\mIRC.tem' KeyPath='yes' /> 
+		</Component>
+		<Component Id='mIRC2.png' Guid='ad175df6-82e5-40ad-98b7-8f4391a4adcf'> 
+			<File Id='mIRC2.png' Name='mIRC2.png' DiskId='1' Source='.\nbs-irc-2.43-160326-mod\scripts\tema\mIRC2.png' KeyPath='yes' /> 
+		</Component>
+		<Component Id='mIRC2.tem' Guid=''> 
+			<File Id='mIRC2.tem' Name='mIRC2.tem' DiskId='1' Source='.\nbs-irc-2.43-160326-mod\scripts\tema\mIRC2.tem' KeyPath='yes' /> 
+		</Component>
+		<Component Id='narrow_black.png' Guid='101ffd75-f581-403e-bce1-2dff3fecc36f'> 
+			<File Id='narrow_black.png' Name='narrow-black.png' DiskId='1' Source='.\nbs-irc-2.43-160326-mod\scripts\tema\narrow-black.png' KeyPath='yes' /> 
+		</Component>
+		<Component Id='narrow_black.tem' Guid='b2af16fd-356c-4aa2-81bf-a5e173601e69'> 
+			<File Id='narrow_black.tem' Name='narrow-black.tem' DiskId='1' Source='.\nbs-irc-2.43-160326-mod\scripts\tema\narrow-black.tem' KeyPath='yes' /> 
+		</Component>
+		<Component Id='narrow_blue.png' Guid='0258f985-db51-487d-8c45-b258387f26fb'> 
+			<File Id='narrow_blue.png' Name='narrow-blue.png' DiskId='1' Source='.\nbs-irc-2.43-160326-mod\scripts\tema\narrow-blue.png' KeyPath='yes' /> 
+		</Component>
+		<Component Id='narrow_blue.tem' Guid='61f7de89-f692-48b8-a4e4-08aebdb3cc03'> 
+			<File Id='narrow_blue.tem' Name='narrow-blue.tem' DiskId='1' Source='.\nbs-irc-2.43-160326-mod\scripts\tema\narrow-blue.tem' KeyPath='yes' /> 
+		</Component>
+		<Component Id='narrow_green.png' Guid='9345463a-2d7e-4d64-8ff2-00443170a15e'> 
+			<File Id='narrow_green.png' Name='narrow-green.png' DiskId='1' Source='.\nbs-irc-2.43-160326-mod\scripts\tema\narrow-green.png' KeyPath='yes' /> 
+		</Component>
+		<Component Id='narrow_green.tem' Guid='fa02e062-16cf-430c-a99d-eee91f406611'> 
+			<File Id='narrow_green.tem' Name='narrow-green.tem' DiskId='1' Source='.\nbs-irc-2.43-160326-mod\scripts\tema\narrow-green.tem' KeyPath='yes' /> 
+		</Component>
+		<Component Id='narrow_red.png' Guid='01abda52-e484-4b0b-b735-1590361a7221'> 
+			<File Id='narrow_red.png' Name='narrow-red.png' DiskId='1' Source='.\nbs-irc-2.43-160326-mod\scripts\tema\narrow-red.png' KeyPath='yes' /> 
+		</Component>
+		<Component Id='narrow_red.tem' Guid='8d062cc6-ef2d-4231-9293-318a0586f88d'> 
+			<File Id='narrow_red.tem' Name='narrow-red.tem' DiskId='1' Source='.\nbs-irc-2.43-160326-mod\scripts\tema\narrow-red.tem' KeyPath='yes' /> 
+		</Component>
+		<Component Id='narrow.png' Guid='b5f9dbb2-9209-43a8-a5d3-1bd7b0f5fa11'> 
+			<File Id='narrow.png' Name='narrow.png' DiskId='1' Source='.\nbs-irc-2.43-160326-mod\scripts\tema\narrow.png' KeyPath='yes' /> 
+		</Component>
+		<Component Id='narrow.tem' Guid='e06ef7af-e61e-4555-a142-185fde1f8f96'> 
+			<File Id='narrow.tem' Name='narrow.tem' DiskId='1' Source='.\nbs-irc-2.43-160326-mod\scripts\tema\narrow.tem' KeyPath='yes' /> 
+		</Component>
+		<Component Id='nature.png' Guid='d8878d45-e861-441f-b4b8-51f3b6e721ba'> 
+			<File Id='nature.png' Name='nature.png' DiskId='1' Source='.\nbs-irc-2.43-160326-mod\scripts\tema\nature.png' KeyPath='yes' /> 
+		</Component>
+		<Component Id='nature.tem' Guid='b3d599c4-6744-4152-acd2-a151c8d74815'> 
+			<File Id='nature.tem' Name='nature.tem' DiskId='1' Source='.\nbs-irc-2.43-160326-mod\scripts\tema\nature.tem' KeyPath='yes' /> 
+		</Component>
+		<Component Id='net.png' Guid='2b843a75-00ee-4903-a9d7-bcc5356edcc1'> 
+			<File Id='net.png' Name='net.png' DiskId='1' Source='.\nbs-irc-2.43-160326-mod\scripts\tema\net.png' KeyPath='yes' /> 
+		</Component>
+		<Component Id='net.tem' Guid='53de4d71-f52e-4c49-aad1-3b6f9cee150e'> 
+			<File Id='net.tem' Name='net.tem' DiskId='1' Source='.\nbs-irc-2.43-160326-mod\scripts\tema\net.tem' KeyPath='yes' /> 
+		</Component>
+		<Component Id='ocean.png' Guid='0689cf37-e7c2-4b51-9c5d-eedfe2f4a9b0'> 
+			<File Id='ocean.png' Name='ocean.png' DiskId='1' Source='.\nbs-irc-2.43-160326-mod\scripts\tema\ocean.png' KeyPath='yes' /> 
+		</Component>
+		<Component Id='ocean.tem' Guid='7bfaa0ff-4296-43b1-b594-9a9371be300b'> 
+			<File Id='ocean.tem' Name='ocean.tem' DiskId='1' Source='.\nbs-irc-2.43-160326-mod\scripts\tema\ocean.tem' KeyPath='yes' /> 
+		</Component>
+		<Component Id='onefin_mod.png' Guid='036eefcc-cc44-4f4c-95ee-02d672f4fb01'> 
+			<File Id='onefin_mod.png' Name='onefin-mod.png' DiskId='1' Source='.\nbs-irc-2.43-160326-mod\scripts\tema\onefin-mod.png' KeyPath='yes' /> 
+		</Component>
+		<Component Id='onefin_mod.tem' Guid='a15ac4f6-ccbd-44b8-93ce-955026afe9f4'> 
+			<File Id='onefin_mod.tem' Name='onefin-mod.tem' DiskId='1' Source='.\nbs-irc-2.43-160326-mod\scripts\tema\onefin-mod.tem' KeyPath='yes' /> 
+		</Component>
+		<Component Id='onefin.png' Guid='a8461af9-9538-407f-990b-b97e6d48d31b'> 
+			<File Id='onefin.png' Name='onefin.png' DiskId='1' Source='.\nbs-irc-2.43-160326-mod\scripts\tema\onefin.png' KeyPath='yes' /> 
+		</Component>
+		<Component Id='onefin.tem' Guid='db0cc94c-18a0-4133-8935-52fc60600377'> 
+			<File Id='onefin.tem' Name='onefin.tem' DiskId='1' Source='.\nbs-irc-2.43-160326-mod\scripts\tema\onefin.tem' KeyPath='yes' /> 
+		</Component>
+		<Component Id='pink.png' Guid='ddaaf515-ec24-4f30-a5f2-365abbf5a2e2'> 
+			<File Id='pink.png' Name='pink.png' DiskId='1' Source='.\nbs-irc-2.43-160326-mod\scripts\tema\pink.png' KeyPath='yes' /> 
+		</Component>
+		<Component Id='pink.tem' Guid='1bb821bd-3d16-48aa-8d97-8d15efc61626'> 
+			<File Id='pink.tem' Name='pink.tem' DiskId='1' Source='.\nbs-irc-2.43-160326-mod\scripts\tema\pink.tem' KeyPath='yes' /> 
+		</Component>
+		<Component Id='pink_panther.png' Guid='9ea5c823-ccfc-475c-8c80-4000d70004a1'> 
+			<File Id='pink_panther.png' Name='pink_panther.png' DiskId='1' Source='.\nbs-irc-2.43-160326-mod\scripts\tema\pink_panther.png' KeyPath='yes' /> 
+		</Component>
+		<Component Id='pink_panther.tem' Guid='0dd5a246-cc01-4176-b847-04dbe23455fd'> 
+			<File Id='pink_panther.tem' Name='pink_panther.tem' DiskId='1' Source='.\nbs-irc-2.43-160326-mod\scripts\tema\pink_panther.tem' KeyPath='yes' /> 
+		</Component>
+		<Component Id='purple.png' Guid='3f93b1be-4a37-44ce-b58e-91ec4f3944cb'> 
+			<File Id='purple.png' Name='purple.png' DiskId='1' Source='.\nbs-irc-2.43-160326-mod\scripts\tema\purple.png' KeyPath='yes' /> 
+		</Component>
+		<Component Id='purple.tem' Guid='58893f2a-6250-4d1c-b1dd-cae054af12fb'> 
+			<File Id='purple.tem' Name='purple.tem' DiskId='1' Source='.\nbs-irc-2.43-160326-mod\scripts\tema\purple.tem' KeyPath='yes' /> 
+		</Component>
+		<Component Id='purple_fire.png' Guid='933d199d-827d-45b2-bc5e-893500f1dade'> 
+			<File Id='purple_fire.png' Name='purple_fire.png' DiskId='1' Source='.\nbs-irc-2.43-160326-mod\scripts\tema\purple_fire.png' KeyPath='yes' /> 
+		</Component>
+		<Component Id='purple_fire.tem' Guid='bbcff544-6722-4974-bb41-f78aa192635f'> 
+			<File Id='purple_fire.tem' Name='purple_fire.tem' DiskId='1' Source='.\nbs-irc-2.43-160326-mod\scripts\tema\purple_fire.tem' KeyPath='yes' /> 
+		</Component>
+		<Component Id='red.png' Guid='6363bf6e-8f93-426c-b6b6-e87719754218'> 
+			<File Id='red.png' Name='red.png' DiskId='1' Source='.\nbs-irc-2.43-160326-mod\scripts\tema\red.png' KeyPath='yes' /> 
+		</Component>
+		<Component Id='red.tem' Guid='84e499c2-97b9-4dab-8424-ee243588b493'> 
+			<File Id='red.tem' Name='red.tem' DiskId='1' Source='.\nbs-irc-2.43-160326-mod\scripts\tema\red.tem' KeyPath='yes' /> 
+		</Component>
+		<Component Id='sand.png' Guid='9f51cba0-260c-4242-bcb9-bf2d4970768b'> 
+			<File Id='sand.png' Name='sand.png' DiskId='1' Source='.\nbs-irc-2.43-160326-mod\scripts\tema\sand.png' KeyPath='yes' /> 
+		</Component>
+		<Component Id='sand.tem' Guid='3cef2827-7187-419e-a673-d0afe0f3f8d6'> 
+			<File Id='sand.tem' Name='sand.tem' DiskId='1' Source='.\nbs-irc-2.43-160326-mod\scripts\tema\sand.tem' KeyPath='yes' /> 
+		</Component>
+		<Component Id='sne.png' Guid='6edcabb8-3907-4689-b84f-06e888fabc61'> 
+			<File Id='sne.png' Name='sne.png' DiskId='1' Source='.\nbs-irc-2.43-160326-mod\scripts\tema\sne.png' KeyPath='yes' /> 
+		</Component>
+		<Component Id='sne.tem' Guid='a712b91e-4c0f-4a8a-9fce-95e32c6735ce'> 
+			<File Id='sne.tem' Name='sne.tem' DiskId='1' Source='.\nbs-irc-2.43-160326-mod\scripts\tema\sne.tem' KeyPath='yes' /> 
+		</Component>
+		<Component Id='snow.png' Guid='89e86701-fdc5-4cff-a62e-22d4ea07f45b'> 
+			<File Id='snow.png' Name='snow.png' DiskId='1' Source='.\nbs-irc-2.43-160326-mod\scripts\tema\snow.png' KeyPath='yes' /> 
+		</Component>
+		<Component Id='snow.tem' Guid='447952fb-4fcc-416b-a32b-9f282b1b089e'> 
+			<File Id='snow.tem' Name='snow.tem' DiskId='1' Source='.\nbs-irc-2.43-160326-mod\scripts\tema\snow.tem' KeyPath='yes' /> 
+		</Component>
+		<Component Id='soft_red.png' Guid='d990df4c-7d7e-4736-aa46-aaced8e0938e'> 
+			<File Id='soft_red.png' Name='soft_red.png' DiskId='1' Source='.\nbs-irc-2.43-160326-mod\scripts\tema\soft_red.png' KeyPath='yes' /> 
+		</Component>
+		<Component Id='soft_red.tem' Guid='21342b0f-31c3-40f2-a312-b2e8fd249a62'> 
+			<File Id='soft_red.tem' Name='soft_red.tem' DiskId='1' Source='.\nbs-irc-2.43-160326-mod\scripts\tema\soft_red.tem' KeyPath='yes' /> 
+		</Component>
+		<Component Id='temp.png' Guid='46af06ee-6bb6-4509-a0c5-3c0bdf484646'> 
+			<File Id='temp.png' Name='temp.png' DiskId='1' Source='.\nbs-irc-2.43-160326-mod\scripts\tema\temp.png' KeyPath='yes' /> 
+		</Component>
+		<Component Id='temp.tem' Guid='bc96577e-b803-4395-b9ca-0293842daf58'> 
+			<File Id='temp.tem' Name='temp.tem' DiskId='1' Source='.\nbs-irc-2.43-160326-mod\scripts\tema\temp.tem' KeyPath='yes' /> 
+		</Component>
+		<Component Id='vinotinto.png' Guid='b222c7cf-b55d-4264-ab28-55ac7549a143'> 
+			<File Id='vinotinto.png' Name='vinotinto.png' DiskId='1' Source='.\nbs-irc-2.43-160326-mod\scripts\tema\vinotinto.png' KeyPath='yes' /> 
+		</Component>
+		<Component Id='vinotinto.tem' Guid='e90ac008-9893-4745-ae99-3045ca224ca3'> 
+			<File Id='vinotinto.tem' Name='vinotinto.tem' DiskId='1' Source='.\nbs-irc-2.43-160326-mod\scripts\tema\vinotinto.tem' KeyPath='yes' /> 
+		</Component>
+		<Component Id='wintergrey.png' Guid='73a0427c-b163-4b67-a630-c05c7e9c6fb6'> 
+			<File Id='wintergrey.png' Name='wintergrey.png' DiskId='1' Source='.\nbs-irc-2.43-160326-mod\scripts\tema\wintergrey.png' KeyPath='yes' /> 
+		</Component>
+		<Component Id='wintergrey.tem' Guid='d82810c5-4d45-45e4-a706-0077c175d8a8'> 
+			<File Id='wintergrey.tem' Name='wintergrey.tem' DiskId='1' Source='.\nbs-irc-2.43-160326-mod\scripts\tema\wintergrey.tem' KeyPath='yes' /> 
+		</Component>
+	</DirectoryRef>
+	<DirectoryRef Id="TXT">
+		<Component Id='cmds_extended.txt' Guid='b77f0518-1cc5-43e1-a1e7-36f3cf6a913c'> 
+			<File Id='cmds_extended.txt' Name='cmds_extended.txt' DiskId='1' Source='.\nbs-irc-2.43-160326-mod\scripts\txt\cmds_extended.txt' KeyPath='yes' /> 
+		</Component>
+		<Component Id='cmds_irc.txt' Guid='ecf7967f-b540-4908-87cf-b55d9954b335'> 
+			<File Id='cmds_irc.txt' Name='cmds_irc.txt' DiskId='1' Source='.\nbs-irc-2.43-160326-mod\scripts\txt\cmds_irc.txt' KeyPath='yes' /> 
+		</Component>
+		<Component Id='cmds_other.txt' Guid='b8d56100-85b6-468d-b48e-80d91e2a9203'> 
+			<File Id='cmds_other.txt' Name='cmds_other.txt' DiskId='1' Source='.\nbs-irc-2.43-160326-mod\scripts\txt\cmds_other.txt' KeyPath='yes' /> 
+		</Component>
+		<Component Id='cmds_setup.txt' Guid='28fead66-def2-4662-9b40-99ef9ee50587'> 
+			<File Id='cmds_setup.txt' Name='cmds_setup.txt' DiskId='1' Source='.\nbs-irc-2.43-160326-mod\scripts\txt\cmds_setup.txt' KeyPath='yes' /> 
+		</Component>
+		<Component Id='cmds_sysinfo.txt' Guid='faf0bd34-e402-485b-8f4a-da4861ce9ed2'> 
+			<File Id='cmds_sysinfo.txt' Name='cmds_sysinfo.txt' DiskId='1' Source='.\nbs-irc-2.43-160326-mod\scripts\txt\cmds_sysinfo.txt' KeyPath='yes' /> 
+		</Component>
+		<Component Id='runex.txt' Guid='bb246bc2-c4b6-42f3-9c7c-717d0228da0e'> 
+			<File Id='runex.txt' Name='runex.txt' DiskId='1' Source='.\nbs-irc-2.43-160326-mod\scripts\txt\runex.txt' KeyPath='yes' /> 
+		</Component>
+		<Component Id='tedit.txt' Guid='57b4a293-0c5d-4d19-b38b-0c7a518e9b2f'> 
+			<File Id='tedit.txt' Name='tedit.txt' DiskId='1' Source='.\nbs-irc-2.43-160326-mod\scripts\txt\tedit.txt' KeyPath='yes' /> 
+		</Component>
+		<Component Id='tips.txt' Guid='4faf0002-da28-4b37-98cd-69aa3a5bb08a'> 
+			<File Id='tips.txt' Name='tips.txt' DiskId='1' Source='.\nbs-irc-2.43-160326-mod\scripts\txt\tips.txt' KeyPath='yes' /> 
+		</Component>
+	</DirectoryRef>
+	<!-- Step 3: Tell WiX to install the files -->
+	<Feature Id="MainScript" Title="Main Script" Level="1">
+		<ComponentRef Id='fix' />
+		<ComponentRef Id='LICENSE' />
+		<ComponentRef Id='mirc.ini' />
+		<ComponentRef Id='nbs.ico' />
+		<ComponentRef Id='popups.ini' />
+		<ComponentRef Id='README.MD' />
+		<ComponentRef Id='servers.ini' />
+		<ComponentRef Id='a_own.nbs' />
+		<ComponentRef Id='alias1.nbs' />
+		<ComponentRef Id='alias2.nbs' />
+		<ComponentRef Id='alias3.nbs' />
+		<ComponentRef Id='beep.wav' />
+		<ComponentRef Id='main.nbs' />
+		<ComponentRef Id='qry.wav' />
+		<ComponentRef Id='qry_old.wav' />
+		<ComponentRef Id='r_own.nbs' />
+		<ComponentRef Id='aircdll.dll' />
+		<ComponentRef Id='darkenginex.dll' />
+		<ComponentRef Id='dcx.dll' />
+		<ComponentRef Id='i.dll' />
+		<ComponentRef Id='mDock61.dll' />
+		<ComponentRef Id='swamp.dll' />
+		<ComponentRef Id='tb.dll' />
+		<ComponentRef Id='wa_link.dll' />
+		<ComponentRef Id='winamp.dll' />
+		<ComponentRef Id='BARS.MDX' />
+		<ComponentRef Id='CTL_GEN.MDX' />
+		<ComponentRef Id='dialog.mdx' />
+		<ComponentRef Id='mdx.dll' />
+		<ComponentRef Id='VIEWS.MDX' />
+		<ComponentRef Id='taskbar.png' />
+		<ComponentRef Id='tray.png' />
+		<ComponentRef Id='version' />
+		<ComponentRef Id='alien_blue.png' />
+		<ComponentRef Id='alien_blue.tem' />
+		<ComponentRef Id='alien_bright.png' />
+		<ComponentRef Id='alien_bright.tem' />
+		<ComponentRef Id='alien_bright2.png' />
+		<ComponentRef Id='alien_bright2.tem' />
+		<ComponentRef Id='alien_orange.png' />
+		<ComponentRef Id='alien_orange.tem' />
+		<ComponentRef Id='alien_red.png' />
+		<ComponentRef Id='alien_red.tem' />
+		<ComponentRef Id='alien.png' />
+		<ComponentRef Id='alien.tem' />
+		<ComponentRef Id='apelsinjuice_inverted.png' />
+		<ComponentRef Id='apelsinjuice_inverted.tem' />
+		<ComponentRef Id='apelsinjuice1_1.png' />
+		<ComponentRef Id='apelsinjuice1_1.tem' />
+		<ComponentRef Id='apelsinjuice1.png' />
+		<ComponentRef Id='apelsinjuice1.tem' />
+		<ComponentRef Id='babyblue.png' />
+		<ComponentRef Id='babyblue.tem' />
+		<ComponentRef Id='bee_sting.png' />
+		<ComponentRef Id='bee_sting.tem' />
+		<ComponentRef Id='beige.png' />
+		<ComponentRef Id='beige.tem' />
+		<ComponentRef Id='blank.png' />
+		<ComponentRef Id='blue.png' />
+		<ComponentRef Id='blue.tem' />
+		<ComponentRef Id='cb4.png' />
+		<ComponentRef Id='cb4.tem' />
+		<ComponentRef Id='clean.png' />
+		<ComponentRef Id='clean.tem' />
+		<ComponentRef Id='cold_bright.png' />
+		<ComponentRef Id='cold_bright.tem' />
+		<ComponentRef Id='cold_green.png' />
+		<ComponentRef Id='cold_green.tem' />
+		<ComponentRef Id='cold_orange.png' />
+		<ComponentRef Id='cold_orange.tem' />
+		<ComponentRef Id='cold_red.png' />
+		<ComponentRef Id='cold_red.tem' />
+		<ComponentRef Id='cold.png' />
+		<ComponentRef Id='cold.tem' />
+		<ComponentRef Id='creme.png' />
+		<ComponentRef Id='creme.tem' />
+		<ComponentRef Id='dks.png' />
+		<ComponentRef Id='dks.tem' />
+		<ComponentRef Id='dovium.png' />
+		<ComponentRef Id='dovium.tem' />
+		<ComponentRef Id='dusk_blue.png' />
+		<ComponentRef Id='dusk_blue.tem' />
+		<ComponentRef Id='dusk_green.png' />
+		<ComponentRef Id='dusk_green.tem' />
+		<ComponentRef Id='dusk_pink.png' />
+		<ComponentRef Id='dusk_pink.tem' />
+		<ComponentRef Id='dusk_red.png' />
+		<ComponentRef Id='dusk_red.tem' />
+		<ComponentRef Id='dusk.png' />
+		<ComponentRef Id='dusk.tem' />
+		<ComponentRef Id='envision.png' />
+		<ComponentRef Id='envision.tem' />
+		<ComponentRef Id='fragbite.png' />
+		<ComponentRef Id='fragbite.tem' />
+		<ComponentRef Id='fusion.png' />
+		<ComponentRef Id='fusion.tem' />
+		<ComponentRef Id='grass.png' />
+		<ComponentRef Id='grass.tem' />
+		<ComponentRef Id='green.png' />
+		<ComponentRef Id='green.tem' />
+		<ComponentRef Id='grey.png' />
+		<ComponentRef Id='grey.tem' />
+		<ComponentRef Id='haxxor.png' />
+		<ComponentRef Id='haxxor.tem' />
+		<ComponentRef Id='ice.png' />
+		<ComponentRef Id='ice.tem' />
+		<ComponentRef Id='irssi.png' />
+		<ComponentRef Id='irssi.tem' />
+		<ComponentRef Id='leaf.png' />
+		<ComponentRef Id='leaf.tem' />
+		<ComponentRef Id='lightblue.png' />
+		<ComponentRef Id='lightblue.tem' />
+		<ComponentRef Id='lite.png' />
+		<ComponentRef Id='lite.tem' />
+		<ComponentRef Id='mauve_.png' />
+		<ComponentRef Id='mauve_.tem' />
+		<ComponentRef Id='mauve.png' />
+		<ComponentRef Id='mauve.tem' />
+		<ComponentRef Id='mIRC_black.png' />
+		<ComponentRef Id='mIRC_black.tem' />
+		<ComponentRef Id='mIRC.png' />
+		<ComponentRef Id='mIRC.tem' />
+		<ComponentRef Id='mIRC2.png' />
+		<ComponentRef Id='mIRC2.tem' />
+		<ComponentRef Id='narrow_black.png' />
+		<ComponentRef Id='narrow_black.tem' />
+		<ComponentRef Id='narrow_blue.png' />
+		<ComponentRef Id='narrow_blue.tem' />
+		<ComponentRef Id='narrow_green.png' />
+		<ComponentRef Id='narrow_green.tem' />
+		<ComponentRef Id='narrow_red.png' />
+		<ComponentRef Id='narrow_red.tem' />
+		<ComponentRef Id='narrow.png' />
+		<ComponentRef Id='narrow.tem' />
+		<ComponentRef Id='nature.png' />
+		<ComponentRef Id='nature.tem' />
+		<ComponentRef Id='net.png' />
+		<ComponentRef Id='net.tem' />
+		<ComponentRef Id='ocean.png' />
+		<ComponentRef Id='ocean.tem' />
+		<ComponentRef Id='onefin_mod.png' />
+		<ComponentRef Id='onefin_mod.tem' />
+		<ComponentRef Id='onefin.png' />
+		<ComponentRef Id='onefin.tem' />
+		<ComponentRef Id='pink.png' />
+		<ComponentRef Id='pink.tem' />
+		<ComponentRef Id='pink_panther.png' />
+		<ComponentRef Id='pink_panther.tem' />
+		<ComponentRef Id='purple.png' />
+		<ComponentRef Id='purple.tem' />
+		<ComponentRef Id='purple_fire.png' />
+		<ComponentRef Id='purple_fire.tem' />
+		<ComponentRef Id='red.png' />
+		<ComponentRef Id='red.tem' />
+		<ComponentRef Id='sand.png' />
+		<ComponentRef Id='sand.tem' />
+		<ComponentRef Id='sne.png' />
+		<ComponentRef Id='sne.tem' />
+		<ComponentRef Id='snow.png' />
+		<ComponentRef Id='snow.tem' />
+		<ComponentRef Id='soft_red.png' />
+		<ComponentRef Id='soft_red.tem' />
+		<ComponentRef Id='temp.png' />
+		<ComponentRef Id='temp.tem' />
+		<ComponentRef Id='vinotinto.png' />
+		<ComponentRef Id='vinotinto.tem' />
+		<ComponentRef Id='wintergrey.png' />
+		<ComponentRef Id='wintergrey.tem' />
+		<ComponentRef Id='cmds_extended.txt' />
+		<ComponentRef Id='cmds_irc.txt' />
+		<ComponentRef Id='cmds_other.txt' />
+		<ComponentRef Id='cmds_setup.txt' />
+		<ComponentRef Id='cmds_sysinfo.txt' />
+		<ComponentRef Id='runex.txt' />
+		<ComponentRef Id='tedit.txt' />
+		<ComponentRef Id='tips.txt' />
+		<ComponentRef Id='ApplicationShortcut' />
+	</Feature>
+
+	<Icon Id="icon.ico" SourceFile=".\nbs-irc-2.43-160326-mod\nbs.ico"/>
+	<Property Id="ARPPRODUCTICON" Value="icon.ico" />
+	
+	<CustomAction Id="Cleanup_nbs_dir" Directory="AppDataFolder"
+		ExeCommand="cmd /C &quot;rmdir /s /q %appdata%\nbs-irc&quot;"
+		Execute="deferred" Return="ignore" HideTarget="no" Impersonate="no" />
+	
+	<InstallExecuteSequence>
+		<Custom Action="Cleanup_nbs_dir" Before="RemoveFiles" >
+		REMOVE="ALL"
+		</Custom>
+    </InstallExecuteSequence>
+</Product>
+</Wix>
