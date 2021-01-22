@@ -956,7 +956,7 @@ alias power {
 }
 on *:start:{
   if ($version < 7) {
-    if ($n.input(Error: your mIRC version is $version $+ $c44 nbs-irc needs mIRC 7.0 or higher. $crlf $crlf $+ Would you like to go the mIRC download site?,y/n)) n.url http://www.mirc.com/get.html
+    if ($n.input(Error: your mIRC version is $version $+ $c44 nbs-irc needs mIRC 7.42 or higher. $crlf $crlf $+ Would you like to go the mIRC download site?,y/n)) n.url http://www.mirc.com/get.html
     exit
   }
   if ($uptime(mirc) < 10000) n.checkfiles
@@ -1346,16 +1346,16 @@ on ^*:notice:*:*:{
       did -c botctrl 99 1
     }
     elseif ($1 == CHALLENGE) && ($nick === Q) {
-      if (LEGACY-MD5 isin $3-) {
+      if (HMAC-SHA-256 isin $3-) {
         var %k = $calc($len($ncfg(authpass)) +1), %i = 1
         while (%k > 1) {
           var %k = $calc(%k -3), %r = %r $+ $chr($calc($mid($ncfg(authpass),%k,3) + %i))
           inc %i 1
         }
         n.echo notice -agqt received key, sending auth.
-        .msg q@cserve.quakenet.org challengeauth $ncfg(authnick) $md5($left(%r,10) $2) LEGACY-MD5
+        .msg q@cserve.quakenet.org challengeauth $ncfg(authnick) $hmac($2,$sha256($lower($ncfg(authnick)) $+ : $+ $sha256($left(%r,10))),sha256) HMAC-SHA-256
       }
-      else n.echo info -atg Error: LEGACY-MD5 seems to be removed, disable challengeauth to auth.
+      else n.echo info -atg Error: HMAC-SHA-256 seems to be removed, disable challengeauth to auth.
     }
     elseif ($mid($1,2,-1) ischan) n.echo notice -t $mid($1,2,-1) $kl($nick) $1- 
     else n.echo notice -atgi4 $kl:($nick) $1-
@@ -2940,7 +2940,7 @@ dialog om {
 }
 on *:dialog:om:init:0:{
   set -u1 %tmp.aboutblock 1
-  did -a om 10 nbs-irc $n.version for mIRC 7.33+
+  did -a om 10 nbs-irc $n.version for mIRC 7.42+
   did -a om 20 Created by Dibbe && haxninja, maintained by H4ndy @ GitHub
   did -a om 30 Annorax, Maverick, Specter2, Leech, slanne, uK and Dozer
   n.showversion 100
