@@ -47,6 +47,7 @@ n.cpuinfo {
   return $removecs($remove(%x,cpu,(r),(tm),®,,â,Â,@,,¢),Dual Core Processor) (at $getsys(Win32_Processor).CurrentClockSpeed MHz)
 }
 dedll return $dll(scripts\dll\darkenginex.dll,$1,_)
+mudll return $dll(scripts\dll\MemUsage.dll,$1,)
 getsys {
   if ($1) {
     .comopen sys WbemScripting.SWbemLocator
