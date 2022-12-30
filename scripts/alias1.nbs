@@ -1,5 +1,5 @@
 sys {
-  $iif($1 == -e,n.echo normal -atg,say) OS: $n.osinfo  –  CPU: $n.cpuinfo  –  Memory usage: $+($dedll(usedphysicalmem),/,$dedll(totalphysicalmem)) MB ( $+ $dedll(memoryload) $+ )   –   Graphics: $dedll(videocard) ( $+ $replacecs($dedll(res),bpp,bit) $+ )
+  $iif($1 == -e,n.echo normal -atg,say) OS: $n.osinfo  –  CPU: $n.cpuinfo  –  Memory usage: $+($memdll(memused),/,$memdll(memtotal)) MB ( $+ $memdll(memload) $+ $chr(37) $+ )  –  Graphics: $dedll(videocard) ( $+ $replacecs($dedll(res),bpp,bit) $+ )
 }
 os {
   cuptime
@@ -23,7 +23,7 @@ wah say 8,9WAAA8,9A9,8AAAA8,9AAA9,8AAAAA8,9AAAA9,8AAAAA8,9AAAA9,8AAAAAA
 :p say :PpPPppPPpPPppPppPPpPPpPPppPppPPpPPpPPppPppPPpPPpPPppPppPPpPPpPPppPppPPpPPpPPppPppPPpPPpPPppP
 wee say 8,9WEEEE9,8EEEE8,9EEEE9,8EEEE8,9EEEE9,8EEEE8,9EEEE9,8EEEE8,9EEEE9,8EEEE8,9EEEE9,8EEEE8,9EEEE9,8EEEE8,9EEEE9,8EEEE8,9EEEE9,8EEEE8,9EEEE9,8EEEE8,9!!!!!!!!!!
 bu say brain usage: 1% [4|||||||||]
-mem $iif($1 == -e,n.echo normal -atg,say) memory usage: $+($dedll(usedphysicalmem),/,$dedll(totalphysicalmem)) MB ( $+ $dedll(memoryload) $+ )
+mem $iif($1 == -e,n.echo normal -atg,say) memory usage: $+($memdll(memused),/,$memdll(memtotal)) MB ( $+ $memdll(memload) $+ $chr(37) $+ )
 cpu $iif($1 == -e,n.echo normal -atg,say) cpu: $n.cpuinfo
 gfx $iif($1 == -e,n.echo normal -atg,say) graphics card: $dedll(videocard) ( $+ $replacecs($dedll(res),bpp,bit) $+ )
 net $iif($1 == -e,n.echo normal -atg,say) nic: $dedll(conn)
