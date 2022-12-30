@@ -125,10 +125,18 @@ alias n.toolbar {
   toolbar -iz1n3 13 nbs-alarm "Alarm timer" scripts\dll\tb.dll /alarm @tb.alarm
   toolbar -iz1n1 14 nbs-lv "Logviewer" scripts\dll\tb.dll /logg @tb.lv
   if ($ncfg(toolbar_disable_winamp) != 1) {
-    toolbar -is 15 s3
-    toolbar -iz1n4 16 nbs-waprev "Previous track (Winamp)" scripts\dll\tb.dll "/dll scripts\dll\winamp.dll prevsong"
-    toolbar -iz1n5 17 nbs-waplaypause "Play/pause (Winamp)" scripts\dll\tb.dll "/dll scripts\dll\winamp.dll playpause"
-    toolbar -iz1n6 18 nbs-wanext "Next track (Winamp)" scripts\dll\tb.dll "/dll scripts\dll\winamp.dll nextsong"
+    if ($ncfg(spotify) == 1) {
+      toolbar -is 15 s3
+      toolbar -iz1n4 16 nbs-waprev "Previous track (Spotify)" scripts\dll\tb.dll "/dll scripts\dll\spoton.dll control previous"
+      toolbar -iz1n5 17 nbs-waplaypause "Play/pause (Spotify)" scripts\dll\tb.dll "/dll scripts\dll\spoton.dll control playpause"
+      toolbar -iz1n6 18 nbs-wanext "Next track (Spotify)" scripts\dll\tb.dll "/dll scripts\dll\spoton.dll control next"
+    }
+    else {
+      toolbar -is 15 s3
+      toolbar -iz1n4 16 nbs-waprev "Previous track (Winamp)" scripts\dll\tb.dll "/dll scripts\dll\winamp.dll prevsong"
+      toolbar -iz1n5 17 nbs-waplaypause "Play/pause (Winamp)" scripts\dll\tb.dll "/dll scripts\dll\winamp.dll playpause"
+      toolbar -iz1n6 18 nbs-wanext "Next track (Winamp)" scripts\dll\tb.dll "/dll scripts\dll\winamp.dll nextsong"
+    }
   }
   if ($dialog(tb)) dialog -x tb
   dlg tb
@@ -275,7 +283,7 @@ alias slog {
     var %s.file = $n.log($active)
     if (!$isfile(%s.file)) n.echo other -atg /slog: no log file found for $active
     else {
-      var %s.win = @search:  $+ $nopath(%s.file), %t = $ticks
+      var %s.win = @search:  $+ $nopath(%s.file), %t = $ticks
       if ($file(%s.file).size > 10000000) {
         if (!$n.input(This is a very large log file ( $+ $round($calc($file(%s.file).size /1024/1024),2) MB) $+ $c44 searching it will take some time. Do you want to continue?,y/n)) return
       }
@@ -644,7 +652,7 @@ alias aj {
         var %joincpw = %joincpw $gettok($read(%a,%i),1,32) $+ $chr(32)
         var %joinpwds = %joinpwds $gettok($read(%a,%i),2,32) $+ $chr(32)        
       }     
-      else var %joinchans = %joinchans $gettok($read(%a,%i),1,32)) $+ $chr(32)
+      else var %joinchans = %joinchans $gettok($read(%a,%i),1,32) $+ $chr(32)
       inc %newchans
     }
     inc %i
@@ -676,12 +684,12 @@ alias ci {
   if (!$1) return
   return $round($calc($calc($calc($ticks - $hget(temp,ci. [ $+ [ $cid ] $+ ] . [ $+ [ $1 ] ])) / 1000) / 60),0)
 }
-on *:INPUT:@psyBNC (*):{
+on *:INPUT:@psyBNC (*):{
   if (($left($1,1) == /) && (!$ctrlenter)) { return }  
   .!msg -psybnc $1-
   echo $color(notice) -at - $1-
 }
-on *:INPUT:@sBNC (*):{
+on *:INPUT:@sBNC (*):{
   if (($left($1,1) == /) && (!$ctrlenter)) { return }  
   .!msg -sBNC $1-
   echo $color(notice) -at - $1-
@@ -725,6 +733,17 @@ alias n.songannounce {
     }
     else n.echo other -atg iTunes is not running, stopped or other error.
   }
+  elseif ($ncfg(spotify) == 1) {
+    if ($dll(scripts\dll\spoton.dll,status,) == 0) {
+      n.echo other -atg Error: Spotify is not running
+    }
+    elseif ($dll(scripts\dll\spoton.dll,status,) == 1) {
+      n.echo other -atg Error: Spotify is paused
+    }
+    elseif ($dll(scripts\dll\spoton.dll,status,) == 3) {
+      var %wa.out = $replace(%wa.in,[song],$dll(scripts\dll\spoton.dll,song,))
+    }
+  }
   else {
     if ($swamp(trackfilename) == $!null) || (!$swamp(trackfilename)) { n.echo other -atg Error: Winamp is not running/stopped | return }
     if ([stopped] isin $dll(scripts\dll\winamp.dll,song,_)) { n.echo other -atg Error: Winamp must not be stopped | return }
@@ -736,7 +755,7 @@ alias n.songannounce {
     if ([folder] isin %wa.in) var %wa.folder = $gettok(%x,-2,92)
     if ([artist] isin %wa.in) var %wa.artist = $qwa(artist)
     if ([title] isin %wa.in) var %wa.title = $qwa(title)
-    if ([type] isin %wa.in) var %wa.type = $iif(/ isin $gettok(%x,-1,46),stream,$gettok(%x,-1,46)))
+    if ([type] isin %wa.in) var %wa.type = $iif(/ isin $gettok(%x,-1,46),stream,$gettok(%x,-1,46))
     if ([kbps] isin %wa.in) var %wa.bitrate = $swamp(bitrate)
     if ([album] isin %wa.in) var %wa.album  = $qwa(album)
     var %wa.out = $replace(%wa.in,âbåld,,âcålår,,âånderlajn,,âcläör,,[random],$read(config\mp3.txt), $& 
@@ -1054,8 +1073,8 @@ alias n.highlight {
     inc -u10 %tmp.nbf
   }
   if ($hget(nbs,nickwin) == 1) {
-    if (!window(@highlights ( $+ $cid $+ )))  window -k0n @highlights ( $+ $cid $+ )
-    var %echo = @highlights ( $+ $cid $+ )
+    if (!window(@highlights ( $+ $cid $+ )))  window -k0n @highlights ( $+ $cid $+ )
+    var %echo = @highlights ( $+ $cid $+ )
   }
   else var %echo = -s
   echo $color(other) %echo _________________________________________________
@@ -1123,7 +1142,7 @@ alias n.spams {
     if ($hget(prot,$+($1,advertising.ban)) == 1) ban $iif($hget(prot,$+($1,bantime)) isnum 1-,-u $+ $calc($ifmatch *60)) $1-2 $ncfg(ban_mask)
     kick $1-2 $iif($hget(prot,$+($1,advertising.kickmsg)),$ifmatch,no advertising)
   }
-  elseif ($hget(prot,$+($1,advertising.type)) == 1) && (*join*#?* iswm $3-) || */j*#?* iswm $3-) {
+  elseif ($hget(prot,$+($1,advertising.type)) == 1) && (*join*#?* iswm $3-) || (*/j*#?* iswm $3-) {
     if ($hget(prot,$+($1,advertising.ban)) == 1) ban $iif($hget(prot,$+($1,bantime)) isnum 1-,-u $+ $calc($ifmatch *60)) $1-2 $ncfg(ban_mask)
     kick $1-2 $iif($hget(prot,$+($1,advertising.kickmsg)),$ifmatch,no advertising)
   }
@@ -1184,10 +1203,10 @@ alias clonescan {
 }
 alias vote {
   if (%vote) { n.echo info -atg there is already an vote in progress | return }
-  if (!$server) { n.echo info -atg not connected | return }
+  if (!$server) { n.echo -atg info not connected | return }
   if ($active !ischan) { n.echo info -atg not on a channel | return }
   set %vchan #
-  set %vote $$n.input(Enter topic (yes/no))
+  set %vote $n.input(Enter topic (yes/no))
   set %ja 0
   set %nej 0
   msg %vchan %vote (vote with !yes or !no)
@@ -1291,7 +1310,7 @@ on ^*:snotice:*:{
   haltdef
 
   var %timestamp = $iif($msgstamp, $msgstamp, $ctime)
-  
+
   if ($nick == irc.psychoid.net) { 
     n.bnc psyBNC
     echo -tm $bncwin(psyBNC,$cid) - $1-
@@ -1304,7 +1323,7 @@ on ^*:notice:*:*:{
   haltdef
 
   var %timestamp = $iif($msgstamp, $msgstamp, $ctime)
-  
+
   if ($target ischan) {
     echo $color(notice) -gm $target $asctime(%timestamp, $n.timestamp) $pre $par($+($cmode($nick,$target),:,$target)) $1-
     if ($chr(1) $+ # isin $hget(prot,chans)) && ($me isop $target) || ($me ishop $target) {
@@ -1388,8 +1407,8 @@ on ^*:notice:*:*:{
 }
 alias back if ($away) dlg back
 on *:APPACTIVE:titleupdate
-on ^*:CLOSE:@psyBNC (*):if ($window(-psybnc)) close -m -psyBNC
-on ^*:CLOSE:@sBNC (*):if ($window(-sbnc)) close -m -sBNC
+on ^*:CLOSE:@psyBNC (*):if ($window(-psybnc)) close -m -psyBNC
+on ^*:CLOSE:@sBNC (*):if ($window(-sbnc)) close -m -sBNC
 alias echoall {
   if (!$1) { return }
   var %i = 1  
@@ -2444,16 +2463,16 @@ dialog misc {
 on *:dialog:misc:init:0:{
   if ($ncfg(ar_time) isnum) did -a misc 9 $ncfg(ar_time) 
   if ($ncfg(whois) == @whois) did -c misc 18
-  did -a misc 20 *!ident@host.com $str( ,99) z
-  did -a misc 20 *!*ident@host.com (default) $str( ,99) 1
-  did -a misc 20 *!*@host.com $str( ,99) 2
-  did -a misc 20 *!*ident@*.com $str( ,99) 3
-  did -a misc 20 *!*@*.com $str( ,99) 4
-  did -a misc 20 nick!ident@host.com $str( ,99) 5
-  did -a misc 20 nick!*ident@host.com $str( ,99) 6
-  did -a misc 20 nick!*@host.com $str( ,99) 7
-  did -a misc 20 nick!*ident@*.com $str( ,99) 8
-  did -a misc 20 nick!*@*.com $str( ,99) 9
+  did -a misc 20 *!ident@host.com $str( ,99) z
+  did -a misc 20 *!*ident@host.com (default) $str( ,99) 1
+  did -a misc 20 *!*@host.com $str( ,99) 2
+  did -a misc 20 *!*ident@*.com $str( ,99) 3
+  did -a misc 20 *!*@*.com $str( ,99) 4
+  did -a misc 20 nick!ident@host.com $str( ,99) 5
+  did -a misc 20 nick!*ident@host.com $str( ,99) 6
+  did -a misc 20 nick!*@host.com $str( ,99) 7
+  did -a misc 20 nick!*ident@*.com $str( ,99) 8
+  did -a misc 20 nick!*@*.com $str( ,99) 9
   if ($ncfg(ban_mask) isnum) did -c misc 20 $calc($ifmatch +1)
   elseif ($ncfg(ban_mask) == z) did -c misc 20 1
   n.ds cr 26 whois_on_kick
@@ -2508,36 +2527,83 @@ on *:dialog:misc:sclick:5:{
     if ($dialog(tb)) dialog -x tb
   }
 }
+
+alias -l n.mediacontrol {
+  if ($ncfg(toolbar_disable_winamp) != 1) {
+    if ($ncfg(spotify) == 1) {
+      toolbar -tl nbs-waprev "Previous track (Spotify)" "/dll scripts\dll\spoton.dll control previous"
+      toolbar -tl nbs-waplaypause "Play/pause (Spotify)" "/dll scripts\dll\spoton.dll control playpause"
+      toolbar -tl nbs-wanext "Next track (Spotify)" "/dll scripts\dll\spoton.dll control next"
+    }
+    else {
+      toolbar -tl nbs-waprev "Previous track (Winamp)" "/dll scripts\dll\winamp.dll prevsong"
+      toolbar -tl nbs-waplaypause "Play/pause (Winamp)" "/dll scripts\dll\winamp.dll playpause"
+      toolbar -tl nbs-wanext "Next track (Winamp)" "/dll scripts\dll\winamp.dll nextsong"
+    }
+  }
+}
+alias -l song.temp {
+  if ($1- != $null) {
+    spssh $replace($1-,[mp3],Artist - Song title,[type],mp3,[artist],Artist,[title],Song title,[album],Album,[time],3:12,[etime],1:54,[kbps],192 kbps,[size],4.7MB,[filename],04-artist-the_song.mp3,[path],$mircdir,[folder],folder name,[random],random line,[song],artist - title)
+  }
+}
+
+alias -l spssh {
+  if ($1- != $null) {
+    clear @spss
+    var %ttext = $1-
+    var %tfont = tahoma, %tsize = 11
+    window -dBk0pw0h +dL @spss -1 -1 360 15
+    drawfill -r @spss $rgb(face) $rgb(face) 0 0
+    drawrect -rf @spss $rgb(face) 1 $calc($width(%ttext,%tfont,%tsize,0,1) + 3) 0 360 15
+    drawtext -pb @spss $color(text) $color(background) %tfont %tsize 2 1 %ttext
+    drawrect -r @spss $color(text) 1 0 0 $calc($width(%ttext,%tfont,%tsize,0,1) + 3) 15
+  }
+  else {
+    clear @spss
+    window -dBk0pw0h +dL @spss -1 -1 360 15
+    drawrect -rf @spss $rgb(face) 1 0 0 360 15
+  }
+  drawsave @spss spssh.bmp
+  $iif($dialog(mp3s),did -g mp3s 31 spssh.bmp)
+  window -c @spss
+}
+
 dialog mp3s {
   title "Song announce (/sa, /np)"
-  size -1 -1 203 165
+  size -1 -1 203 186
   option dbu
   icon $scriptdirdll\i.dll, 17
-  tab "Winamp/MM", 20, 3 0 197 150
-  box "Serving (max 3 sends)", 12, 8 97 188 32, tab 20
-  box "Usage", 7, 8 51 188 45, tab 20
-  text "", 6, 13 59 79 34, tab 20
-  text "", 10, 94 59 100 34, tab 20
-  check "Send file on request (5 min timeout)", 13, 13 105 98 10, tab 20
-  edit "", 14, 151 105 42 11, tab 20 autohs
-  edit "", 17, 151 116 42 11, tab 20 autohs
-  text "Trigger:", 15, 130 106 21 9, tab 20 right
-  text "Limit upload speed (KB/s, 0 = unlimited): ~", 16, 37 117 114 8, tab 20 right
-  text "* Uses wa_link.dll wich may crash mIRC on some systems", 18, 10 132 145 8, tab 20
-  text "** Does not work with MediaMonkey", 25, 10 140 141 8, tab 20
+  tab "Winamp/MM", 20, 3 0 197 158
+  box "Serving (max 3 sends)", 12, 8 105 188 32, tab 20
+  box "Usage", 7, 8 61 188 45, tab 20
+  text "", 6, 13 67 79 34, tab 20
+  text "", 10, 94 67 100 34, tab 20
+  check "Send file on request (5 min timeout)", 13, 13 111 98 10, tab 20
+  edit "", 14, 151 111 42 11, tab 20 autohs
+  edit "", 17, 151 124 42 11, tab 20 autohs
+  text "Trigger:", 15, 128 112 21 9, tab 20 right
+  text "Limit upload speed (KB/s, 0 = unlimited): ~", 16, 37 125 114 8, tab 20 right
+  text "* Uses wa_link.dll wich may crash mIRC on some systems", 18, 10 140 145 8, tab 20
+  text "** Does not work with MediaMonkey", 25, 10 148 141 8, tab 20
   tab "iTunes", 21
-  box "Usage", 19, 8 51 188 39, tab 21
-  text "", 23, 13 59 79 28, tab 21
-  text "", 24, 94 59 100 28, tab 21
-  check "Enable iTunes support instead of Winamp", 22, 9 93 150 10, tab 21
-  button "OK", 3, 163 153 37 11, ok
-  radio "/say", 5, 14 37 24 10
-  radio "/me", 4, 38 37 23 10
+  box "Usage", 19, 8 61 188 39, tab 21
+  text "", 23, 13 67 79 28, tab 21
+  text "", 24, 94 67 100 28, tab 21
+  check "Enable iTunes support instead of Winamp", 22, 9 105 150 10, tab 21
+  tab "Spotify", 26
+  box "Usage", 27, 8 61 188 39, tab 26
+  text "", 28, 13 67 79 28, tab 26
+  text "", 29, 94 67 100 28, tab 26
+  check "Enable Spotify support instead of Winamp and Itunes", 30, 9 113 150 10, tab 26
+  button "OK", 3, 163 161 37 11, ok
+  radio "/say", 5, 12 47 24 10
+  radio "/me", 4, 36 47 23 10
   edit "", 1, 12 24 181 11, autohs
-  button "Edit random", 11, 87 37 37 11
-  button "Default", 9, 125 37 33 11
-  button "Preview", 8, 159 37 33 11
-  box "Display", 2, 8 16 188 35
+  button "Edit random", 11, 85 47 37 11
+  button "Default", 9, 123 47 33 11
+  box "Display", 2, 8 16 188 45
+  icon 31, 12 36 179 7
 }
 On *:dialog:mp3s:init:0:{
   if ($ncfg(mp3s)) {
@@ -2550,33 +2616,75 @@ On *:dialog:mp3s:init:0:{
       did -a mp3s 1 $replace($right($ncfg(mp3s),-2),âbåld,,âcålår,,âånderlajn,,âcläör,)
     }    
   }
+  song.temp $did(mp3s,1).text
   if ($ncfg(mp3getcmd)) did -ar mp3s 14 $ifmatch
   if ($ncfg(mp3maxcps)) did -ar mp3s 17 $replace($ifmatch,o,0)
   n.ds cr 13 mp3serv
-  n.ds cr 22 itunes
   did -a mp3s 6 [artist]*, [title]* and [album]* $crlf $+ [etime] (elapsed time) $crlf $+ [time] (total time) $crlf $+ [kbps] (bitrate, eg: 192 kbps) $crlf $+ [size] (eg: 4.7 MB)
   did -a mp3s 10 [random] (random line, edit above) $crlf $+ [type] (filetype, eg: mp3) $crlf $+ [filename] (eg: asd.mp3) $crlf $+ [path]/[folder] (eg: c:\music\) $crlf $+ [mp3]** (as shown on winamp's titlebar)
   did -a mp3s 23 [artist], [title] and [album] $crlf $+ [etime] (elapsed time) $crlf $+ [time] (total time) $crlf $+ [kbps] (bitrate, eg: 192 kbps)
   did -a mp3s 24 [random] (random line, edit above) $crlf $+ [type] (filetype, eg: mp3) $crlf $+ [mp3] (artist - title)
+  did -a mp3s 28 [song], (artist - title)
   if ($ncfg(itunes) == 1) .timer -m 1 10 did -f mp3s 21
+  if ($ncfg(itunes) == 1 && $ncfg(spotify) == o) {
+    did -c mp3s 22
+  }
+  if ($ncfg(itunes) == o && $ncfg(spotify) == 1) {
+    did -c mp3s 30
+    n.mediacontrol
+  }
+  if ($ncfg(itunes) == o && $ncfg(spotify) == o) {
+    n.mediacontrol
+  }
 }
 On *:dialog:mp3s:sclick:11:txt config\mp3.txt
 On *:dialog:mp3s:sclick:9:{
-  did -ar mp3s 1 $iif($ncfg(itunes) == 1,iTunes,winamp) » [mp3] :: [time]
+  var %temp Winamp » [mp3] :: [time]
+  did -ar mp3s 1 %temp
+  song.temp %temp
   did -c mp3s 5
   did -u mp3s 4
+  did -u 30
+  did -u 22
+  n.ds cw 30 spotify 0
+  n.ds cw 22 itunes 0
+  n.mediacontrol
 }
 On *:dialog:mp3s:sclick,edit:8,1:{
   if ($did(mp3s,1).text) { 
-    var %temp = $did(mp3s,1).text 
-    n.preview mp3s $replace(%temp,[mp3],Artist - Song title,[type],mp3,[artist],Artist,[title],Song title,[album],Album,[time],3:12,[etime],1:54,[kbps],192 kbps,[size],4.7MB,[filename],04-artist-the_song.mp3,[path],$mircdir,[folder],folder name,[random],random line)
+    song.temp $did(mp3s,1).text
   }
 }
 On *:dialog:mp3s:sclick:22:{
   n.ds cw 22 itunes
-  if ($did(mp3s,22).state == 1) did -ar mp3s 1 $replace($did(mp3s,1),winamp,iTunes)
-  else did -ar mp3s 1 $replace($did(mp3s,1),iTunes,winamp)
+  n.ds cw 30 spotify 0
+  n.mediacontrol
+  if ($did(mp3s,22).state == 1) {
+    did -ar mp3s 1 $replace($replace($did(mp3s,1),Winamp,iTunes),Spotify,iTunes)
+    song.temp $did(mp3s,1).text
+    did -u mp3s 30
+  }
+  else { 
+    did -ar mp3s 1 $replace($did(mp3s,1),iTunes,Winamp)
+    song.temp $did(mp3s,1).text
+  }
 }
+
+On *:dialog:mp3s:sclick:30,22:{
+  n.ds cw 22 itunes 0
+  n.ds cw 30 spotify
+  n.mediacontrol
+  if ($did(mp3s,30).state == 1) { 
+    did -u mp3s 22
+    did -ar mp3s 1 $replace($replace($did(mp3s,1),Winamp,Spotify),iTunes,Spotify)
+    song.temp $did(mp3s,1).text
+  }
+  else { 
+    did -ar mp3s 1 $replace($replace($did(mp3s,1),Spotify,Winamp),Spotify,iTunes)
+    song.temp $did(mp3s,1).text
+  }
+}
+
 On *:dialog:mp3s:sclick:3:{
   if ($did(mp3s,13).state == 1) w_ncfg mp3serv 1
   else w_ncfg mp3serv o
@@ -4228,7 +4336,7 @@ on ^*:TEXT:*:#:{
 
   ; Add support for proper playback buffer timestamps which use server-time or znc.in/server-time[-iso] 
   var %timestamp = $iif($msgstamp, $msgstamp, $ctime)
-  
+
   if ($hget(nbs,win_ashow) == 1) window -w $chan
   hadd -m temp ci. [ $+ [ $cid ] $+ ] . [ $+ [ $chan ] ] $ticks
   hadd -m temp text $color(normal) -mlbfi4 # $asctime(%timestamp, $n.timestamp) $replace($nick.style,<mode>,$cmode($nick,$chan,o),<nick>,$nick) $+  $1-
@@ -4337,7 +4445,7 @@ on *:OPEN:?:*:{
   else {
     n.query.stats $nick $address
     if ($ncfg(privpip) == 1) && ($ncfg(query_sound_onopen == 1)) $ncfg(privljud)
-    if ($n.bluser($fulladdress)) echo $color(info) -t $nick $npre User is blacklisted $par($gettok(%bltmp,2-,44)))
+    if ($n.bluser($fulladdress)) echo $color(info) -t $nick $npre User is blacklisted $par($gettok(%bltmp,2-,44))
     if ($hget(nbs,popup_query) == 1) && ($ncfg(popup_query_always) != 1) n.ptext $nick $chr(1) msg from $nick $chr(1) $replace($nick.style,<mode>,$null,<nick>,$nick)  $+ $eval($1-,1)
   }
 }
@@ -4453,7 +4561,7 @@ alias notice {
 alias ctcp {
   if ($isid) return
   if ($2 == ping) set %ctcp.ping.ticks $ticks
-  n.echo ctcp -atgq $kl:(CTCP to $1) $upper($2)) $3-
+  n.echo ctcp -atgq $kl:(CTCP to $1) $upper($2) $3-
   !.ctcp $1-
 }
 alias dcc {
@@ -4586,7 +4694,7 @@ on ^*:KICK:#:{
     }      
   }
 }
-on ^*:BAN:# {
+on ^*:BAN:#: {
   haltdef 
   if ($me isop #) && ($hget(nbs,banskydd) == 1) && ($banmask iswm $address($me,5)) && ($nick != $me) {
     !raw -q mode # -ob $nick $banmask $+ $crlf $+ KICK # $nick : $+ $hget(nbs,bsmed)
@@ -4773,7 +4881,7 @@ raw 311:*:{
   unset %w-*
   if (%whois.idle != 1) {
     if ($ncfg(whois) == @whois) { 
-      set %w-dest @whois ( $+ $cid $+ )
+      set %w-dest @whois ( $+ $cid $+ )
       if (!$window(%w-dest)) {
         if ($ncfg(whois_inside) == 1) { 
           window -k0n %w-dest 
@@ -4867,7 +4975,7 @@ raw 314:*:{
   unset %w-*
   if (%whois.idle != 1) {
     if ($ncfg(whois) == @whois) { 
-      set %w-dest @whois ( $+ $cid $+ )
+      set %w-dest @whois ( $+ $cid $+ )
       if (!$window(%w-dest)) {
         if ($ncfg(whois_inside) == 1) { 
           window -k0n %w-dest 
@@ -5344,8 +5452,8 @@ menu channel {
   Change nick:editbox -a /nick $me
   -
   Away
-  .$iif(!$away,Set away (default F3),$style(2) Set away (default F3))):awaysys 
-  .$iif($away,Return (default F4),$style(2) Return (default F4))):back
+  .$iif(!$away,Set away (default F3),$style(2) Set away (default F3)):awaysys 
+  .$iif($away,Return (default F4),$style(2) Return (default F4)):back
   .-
   .$iif($away,Change away msg,$style(2) Change away message):away $$n.input(Enter new away message:)
 }
@@ -5379,7 +5487,7 @@ menu query {
   Logfile
   .View log:logg
   .View log (external):run $n.log($active)
-  .Search in log:slog $$n.input(Search for:))
+  .Search in log:slog $$n.input(Search for:)
   .Export/save log:exportlog $n.log($active)
   -
   DCC/CTCP
@@ -5406,8 +5514,8 @@ menu menubar {
   .Leave all channels (reason):partall $$n.input(Enter part reason:)
   .-
   Away
-  .$iif(!$away,Set away (F3),$style(2) Set away (F3))):awaysys 
-  .$iif($away,Return (F4),$style(2) Return (F4))):back
+  .$iif(!$away,Set away (F3),$style(2) Set away (F3)):awaysys 
+  .$iif($away,Return (F4),$style(2) Return (F4)):back
   .-
   .$iif($away,Change away msg,$style(2) Change away message):away $$n.input(Enter new away message:)
   -
@@ -5421,14 +5529,14 @@ menu @previewx {
   sclick:window -a @preview
   rclick:close -@ @preview*
 }
-menu @whois (*),@highlights (*) {
+menu @whois (*),@highlights (*) {
   dclick:{
     if ($window($active).mdi) window -n $active
     else close -@ $active
   }
   Settings:misc
 }
-menu @psybnc (*) {
+menu @psybnc (*) {
   Play private log:!raw -q PLAYPRIVATELOG
   Erase private log:!raw -q ERASEPRIVATELOG
   -
@@ -5447,7 +5555,7 @@ menu @psybnc (*) {
   .bquit:!raw -q bquit
   .jump:!raw -q bjump
 }
-menu @sbnc (*) {
+menu @sbnc (*) {
   Read log:n.bnc sbnc read
   Erase log:n.bnc sbnc erase
   -
@@ -5483,7 +5591,7 @@ menu @logviewer {
   $iif($sline(@logviewer,0) && $left($sline(@logviewer,1),1) != [,Rename log) { 
     var %file = $+(",%lv.dir,$sline(@logviewer,1),")
     if ($exists(%file)) {
-      var %newname = $n.input(Enter new name (name.log):,$nopath(%file))"
+      var %newname = $n.input(Enter new name (name.log):,$nopath(%file))
       if (!%newname) { return }
       var %newfile = $+(",%lv.dir,$iif($right(%newname,4) == .log,%newname,$+(%newname,.log)),")
     }
@@ -5518,7 +5626,7 @@ menu @logviewer {
   $iif($sline(@logviewer,0) && $left($sline(@logviewer,1),1) == [,Open selected folder):run $+(",%lv.dir,$mid($sline(@logviewer,1),3,-2),")
   Open current folder:run $+(",%lv.dir,")
 }
-menu @search*,@log*,@clones*,@whois (*),@psybnc (*),@sbnc (*),@highlights (*) {
+menu @search*,@log*,@clones*,@whois (*),@psybnc (*),@sbnc (*),@highlights (*) {
   -
   Clear:clear
   Close:close -@ $active
